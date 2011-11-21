@@ -1,0 +1,32 @@
+	<table cellpadding="10" width="600" align="left" border=0>
+	<tr>
+	<th align="left" bgcolor="eeeeee">Service ID</th><th align="left" bgcolor="eeeeee">Customer ID</th><th align="left" bgcolor="eeeeee">Point A</th><th align="left" bgcolor="eeeeee">Point B</th>
+	</tr>
+	[% FOREACH result IN custServiceResults %]
+		<tr>
+		 <td><font color="cccccc">[% result.service_id %]</font></td>
+		 <td>[% result.customer_id %]</td>
+		 <td>[% result.point_a %]</td>
+		 <td>[% result.point_b%]</td>
+		</tr>
+		<tr>
+		 <th align="left" bgcolor="eeeeee" colspan=4>Base Station Details</th>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Address 1</font><td colspan=4>[% result.address1 %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Address 2</font><td colspan=4>[% result.address2 %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">City</font><td colspan=4>[% result.city %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">State</font><td colspan=4>[% result.state %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Country</font><td colspan=4>[% result.country %]</td>
+		</tr>
+		</tr>
+	[% END %]
+	</table>

@@ -13,6 +13,8 @@
 <ul>
 [% IF (page == 'customer_info' || page == 'customer_add' || page == 'customer_added' || page == 'customer_search' || page == 'customer_search_res' || page == 'customer_modify' || page == 'customer_modified')  %]
 	[% INCLUDE dest_cust_links.tt %]
+[% ELSIF (page == 'services' || page == 'services_search_res') %]
+	[% INCLUDE descr_service_links.tt %]
 [% ELSE %]
 <li><a href="#">Portal</a> Future Link to Portal Elements</li>
 <li><a href="#">Customer Info</a> Future Link to Customer Information</li>

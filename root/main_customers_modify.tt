@@ -1,6 +1,6 @@
 	[% FOREACH result IN custSearchResults %]
         <p class="block"><strong>Modify Customer Details - [% result.cust_id %]</p>
-	<form name="modifyCust1" action="/customers/modify/[% result.cust_id %]" method="POST">
+	<form name="modifyCust1" action="/customers/[% result.cust_id %]/edit" method="POST">
 	<table cellpadding="10" width="600" align="left" border=0>
 	<tr>
 	<th align="left" bgcolor="eeeeee">Customer ID</th><th align="left" bgcolor="eeeeee">Customer Name</th><th align="left" bgcolor="eeeeee">Email Address</th><th align="left" bgcolor="eeeeee">Contact Number</th>

@@ -14,9 +14,7 @@
 [% ELSE %]
 	<h2>Customer Information Dashboard</h2>
         <p>Information pertaining to Customer Info will go here.</p>
-        <p class="block"><strong>Test Text in a Box.</p>
+        <p class="block"><strong>Ticket information to go here</p>
         <h3>More Stuff</h3>
-        <p>.</p>
-        <p>Version: 0.1 (Nov, 2011)</p>
 [% END %]
 </div>

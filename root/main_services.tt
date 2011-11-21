@@ -1,0 +1,19 @@
+<div id="main">
+[% IF page == 'services_added' %]
+	[% INCLUDE main_services_added.tt %]
+[% ELSIF page == 'services_add' %]
+	[% INCLUDE main_services_add.tt %]
+[% ELSIF page == 'services_search' %]
+	[% INCLUDE main_services_search.tt %]
+[% ELSIF page == 'services_search_res' %]
+	[% INCLUDE main_services_search_res.tt %]
+[% ELSIF page == 'services_modify' %]
+	[% INCLUDE main_services_modify.tt %]
+[% ELSIF page == 'services_modified' %]
+	[% INCLUDE main_services_modified.tt %]
+[% ELSE %]
+	<h2>Services Information Dashboard</h2>
+        <p>Information pertaining to Customers' services will go here.</p>
+        <h3>More Stuff</h3>
+[% END %]
+</div>

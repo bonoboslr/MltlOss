@@ -1,4 +1,3 @@
-        <p class="block"><strong>Number of Search Results - [% custSearchResults.size %]</p>
 	<table cellpadding="10" width="600" align="left" border=0>
 	<tr>
 	<th align="left" bgcolor="eeeeee">Customer ID</th><th align="left" bgcolor="eeeeee">Customer Name</th><th align="left" bgcolor="eeeeee">Email Address</th><th align="left" bgcolor="eeeeee">Contact Number</th>
@@ -9,9 +8,6 @@
 		 <td>[% result.cust_name %]</td>
 		 <td>[% result.email_add1 %]</td>
 		 <td>[% result.phone1 %]</td>
-		</tr>
-		<tr>
-		 <td colspan="4">&nbsp;</td>
 		</tr>
 		<tr>
 		 <th align="left" bgcolor="eeeeee" colspan=4>Additional Details</th>
@@ -32,9 +28,6 @@
 		 <td><font color="cccccc">Country</font><td colspan=4>[% result.country %]</td>
 		</tr>
 		<tr>
-		 <td colspan="4">&nbsp;</td>
-		</tr>
-		<tr>
 		 <th align="left" bgcolor="eeeeee" colspan=4>Alternative Contact Details</th>
 		</tr>
 		<tr>
@@ -44,13 +37,24 @@
 		 <td><font color="cccccc">Email</font><td colspan=4>[% result.email_add2 %]</td>
 		</tr>
 		<tr>
-		 <td><font color="cccccc">Account Manager</font><td colspan=4>[% result.account_manager %]</td>
+		 <td><font color="cccccc">Account Manager</font><td colspan=2>[% result.account_manager %]</td>
+	 	 <td align="left" colspan="2"><input type=button onClick=location.href="/customers/[% result.cust_id %]/edit" value="Update Customer Details"></td>
 		</tr>
 	[% END %]
 		<tr>
 		 <td colspan="4">&nbsp;</td>
 		</tr>
 		<tr>
-	 	 <td align="left" colspan="4"><a href="/customers/[% result.cust_id %]/edit">Update Details</a></td>
+	 	 <th align="left" colspan="4" bgcolor="eeeeee"><strong>Service Details</strong></th>
 		</tr>
+		<tr>
+		 <th align=left>ServiceID</th><th align=left>Service Status</th><th align=left colspan=2>Description</th>
+		<tr>
+	[% FOREACH service IN custServiceResults %]
+		<tr>
+		 <td>[% service.service_id %]</td>
+		 <td>[% service.service_status %]</td>
+		 <td colspan=2><a href="/service/[% service.service_id %]">[% service.service_description %] From [% service.point_a %] to [% service.point_b %]</a></td>
+		</tr>
+	[% END %]
 	</table>

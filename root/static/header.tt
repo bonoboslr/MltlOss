@@ -14,7 +14,7 @@
 </div>
 
 <div id="logo">
-<h1><a href="/">Multilinks OSS Portal</a></h1>
+<h1><a href="/">MOSS Portal</a></h1>
 <p>Everything you need [% username %] is here in one place...</p>
 
 </div>
@@ -25,6 +25,8 @@
 
 [% IF ( page == 'customer' || page == 'customer_add' || page == 'customer_added' || page == 'customer_search' || page == 'customer_search_res' || page == 'customer_modify' || page == 'customer_modified') %]
 	[% INCLUDE main_customers.tt %]
+[% ELSIF (page == 'services' || page == 'services_search_res') %]
+	[% INCLUDE main_services.tt %]
 [% ELSE %]
 	[% INCLUDE main.tt %]
 [% END %]

@@ -191,9 +191,39 @@ __PACKAGE__->add_columns(
 );
 __PACKAGE__->set_primary_key("cust_id");
 
+=head1 RELATIONS
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-17 10:57:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:EkTv38QQ9BrQcxYVufvrlg
+=head2 enterprise_services
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::EnterpriseService>
+
+=cut
+
+__PACKAGE__->has_many(
+  "enterprise_services",
+  "MltlOss::Schema::MltlDB::Result::EnterpriseService",
+  { "foreign.customer_id" => "self.cust_id" },
+);
+
+=head2 services_interms
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::ServicesInterm>
+
+=cut
+
+__PACKAGE__->has_many(
+  "services_interms",
+  "MltlOss::Schema::MltlDB::Result::ServicesInterm",
+  { "foreign.customer_id" => "self.cust_id" },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-21 21:25:06
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:P89zxRCzA7cEqkY4YqYZfw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

@@ -117,12 +117,24 @@ sub search_form :Chained("base") : PathPart("search") Args(0) {
 					$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( { 
 							-or => [ phone1 =>  $c->req->param("searchBox"), phone2 => $c->req->param("searchBox")] })]); 
 				} elsif ($searchcriteria eq 'id') { 
-					$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( { cust_id =>  $c->req->param("searchBox") })]); 
+					#$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( { cust_id =>  $c->req->param("searchBox") })]); 
+					my $rs = $c->model('MltlDB::MltlCustomer');
+					@{$c->stash->{custSearchResults}} = $rs->search( { cust_id =>  $c->req->param("searchBox") });
+					my $custid_res = $rs->single( { cust_id =>  $c->req->param("searchBox") });
+					$cust_id = $custid_res->cust_id;
+					$c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
+							customer_id => $cust_id })]);
 				} else { 
-					$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( { cust_name =>  $c->req->param("searchBox") })]); 
+					#$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( { cust_name =>  $c->req->param("searchBox") })]); 
+					# Find CustomerID
+					my $rs = $c->model('MltlDB::MltlCustomer');
+					@{$c->stash->{custSearchResults}} = $rs->search( { cust_name =>  $c->req->param("searchBox") });
+					my $custid_res = $rs->single( { cust_name =>  $c->req->param("searchBox") });
+					$cust_id = $custid_res->cust_id;
+					$c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
+							customer_id => $cust_id })]);
 				} 
 				
-				# Find CustomerID
 
 				# send results to the view
 				$c->session->{cust_id} = $cust_id;
@@ -149,6 +161,8 @@ sub view :Chained('base') :PathPart('') Args(1) {
        	 	$c->stash->{username} = $user;
 		$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( {
                                                         cust_id =>  $cust_id })]);
+		$c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
+							customer_id => $cust_id })]);
         	$c->stash->{page} = 'customer_search_res';
 		$c->session->{cust_id} = $cust_id;
         	$c->forward('end');
@@ -168,9 +182,12 @@ sub mod : Chained('base') :PathPart('') :CaptureArgs(1) {
 sub edit : PathPart('edit') Chained('mod') Args(0) {
 	my ($self, $c) = @_;
 	my $log = $c->log;
+
+	# Grab URI
 	my $url = $c->req->uri;
+
+	# Split URI to get the custid
 	my @elements = split('/',$url);
-	$log->info("URL - $url");
 	my $cust_id = $elements[4];
 
         if ($c->session->{logged_in}) {
