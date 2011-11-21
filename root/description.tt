@@ -1,0 +1,24 @@
+<div id="desc">
+
+<div class="splitleft">
+<h2>Welcome [% username %] to MLTL OSS</h2>
+<p>
+</p>
+
+<p class="right"></p>
+</div>
+
+<div class="splitright">
+<h2>Quick Links:</h2>
+<ul>
+[% IF (page == 'customer_info' || page == 'customer_add' || page == 'customer_added' || page == 'customer_search' || page == 'customer_search_res' || page == 'customer_modify' || page == 'customer_modified')  %]
+	[% INCLUDE dest_cust_links.tt %]
+[% ELSE %]
+<li><a href="#">Portal</a> Future Link to Portal Elements</li>
+<li><a href="#">Customer Info</a> Future Link to Customer Information</li>
+<li><a href="#">Inventory</a> Future Link to Inventory Manangement</li>
+[% END %]
+</ul>
+<p class="right"><a href="#"></a></p>
+</div>
+</div>

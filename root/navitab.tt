@@ -1,0 +1,23 @@
+<h2 class="hide">Site menu:</h2>
+<ul id="navitab">
+[% IF page == 'start' %]
+<li><a class="current" href="/">Start</a></li>
+[% ELSE %]
+<li><a href="/">Start</a></li>
+[% END %]
+[% IF (page == 'customer_info' || page == 'customer_add' || page == 'customer_added' || page == 'customer_search' || page == 'customer_search_res' || page == 'customer_modify') || page == 'customer_modified' %]
+<li><a class="current" href="/customers">Customer Info</a></li>
+[% ELSE %]
+<li><a href="/customers">Customer Info</a></li>
+[% END %]
+
+[% IF username == 'scott' %]
+<li><a href="/admin/">Admin</a></li>
+[% END %]
+<!--
+<li><a href="#">Downloads</a></li>
+<li><a href="#">Photos</a></li>
+<li><a href="#">Tour</a></li>
+<li><a href="#">Interviews</a></li>
+-->
+</ul>

@@ -1,0 +1,18 @@
+        <h2>Search Customer Database</h2>
+	<p> Use the search box below to find customers' details in the database. You can search on email address, telephone number, customer ID or by their known name</p>
+	<form name="custSearch1" method="POST" action="/customers/search">
+	<table cellpadding="10" border=0 align=center>
+	<tr align="left"><th width=150 >Enter Search Criteria</th><th>:</th><td><input type=text width=30 name="searchBox"></td></tr>
+	</table>
+		<input type=radio name="searchOption" value="email"> Email <br>
+		<input type=radio name="searchOption" value="phone"> Phone Number <br> 
+		<input type=radio name="searchOption" value="name"> Name <br>
+		<input type=radio name="searchOption" value="id"> Customer ID <br>
+	<br>
+	<input type=submit name="custSearchSubmit" width="125" value="Click Here To Submit">
+	<script type="text/javascript">
+</script>
+
+	</form>
+	
+	

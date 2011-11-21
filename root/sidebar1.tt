@@ -1,0 +1,23 @@
+<div id="sidebar">
+
+<h2>Latest MLTL OSS News</h2>
+<p>18-11-2011 Version 1.0 - This first release brings the functionality to manage enterprise customer information. It also defines the layout and the structure of the application.</p>
+
+<div class="splitleft">
+<h2>Sample links</h2>
+<ul class="sidelink">
+<li><a href="#">Assignments</a></li>
+<li><a href="#">Events</a></li>
+<li><a href="#">General</a></li>
+<li><a href="#">Releases</a></li>
+<li><a href="#">Surprises</a></li>
+<li><a href="#">Themes</a>
+<ul>
+<li><a href="#">WordPress</a></li>
+<li><a href="#">Mobile</a></li>
+</ul>
+</li>
+<li><a href="#">Wild things</a></li>
+</ul>
+
+</div>

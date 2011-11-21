@@ -1,0 +1,28 @@
+[% IF logged_in == "1" %]
+        [% INCLUDE static/header.tt %]
+[% ELSIF logged_in == "0" %]
+        LOGIN FAILED
+[% ELSE %]
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="description" content="your description goes here" />
+<meta name="keywords" content="your,keywords,goes,here" />
+<link rel="stylesheet" type="text/css" href="/static/css/variant.css" media="screen,projection" title="Variant Portal" />
+<title>MLTL OSS v1.0</title>
+</head>
+<body>
+        <div align=center>
+        <br>
+        <form name="loginForm" action="/login" method="POST">
+        <table align=centre>
+        <tr><td>Username : </td><td><input type="text" name="username" value=[% username %]></td></tr>
+        <tr><td>Password : </td><td><input type="password" name="password"></td></tr>
+        <tr colspan=2><td><input type=submit value=submit></td></tr>
+        </table>
+        </div>
+</body>
+</html>
+
+[% END %]

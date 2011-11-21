@@ -1,0 +1,22 @@
+<div id="main">
+[% IF page == 'customer_added' %]
+	[% INCLUDE main_customers_added.tt %]
+[% ELSIF page == 'customer_add' %]
+	[% INCLUDE main_customers_add.tt %]
+[% ELSIF page == 'customer_search' %]
+	[% INCLUDE main_customers_search.tt %]
+[% ELSIF page == 'customer_search_res' %]
+	[% INCLUDE main_customers_search_res.tt %]
+[% ELSIF page == 'customer_modify' %]
+	[% INCLUDE main_customers_modify.tt %]
+[% ELSIF page == 'customer_modified' %]
+	[% INCLUDE main_customers_modified.tt %]
+[% ELSE %]
+	<h2>Customer Information Dashboard</h2>
+        <p>Information pertaining to Customer Info will go here.</p>
+        <p class="block"><strong>Test Text in a Box.</p>
+        <h3>More Stuff</h3>
+        <p>.</p>
+        <p>Version: 0.1 (Nov, 2011)</p>
+[% END %]
+</div>

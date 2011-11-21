@@ -1,0 +1,56 @@
+        <p class="block"><strong>Number of Search Results - [% custSearchResults.size %]</p>
+	<table cellpadding="10" width="600" align="left" border=0>
+	<tr>
+	<th align="left" bgcolor="eeeeee">Customer ID</th><th align="left" bgcolor="eeeeee">Customer Name</th><th align="left" bgcolor="eeeeee">Email Address</th><th align="left" bgcolor="eeeeee">Contact Number</th>
+	</tr>
+	[% FOREACH result IN custSearchResults %]
+		<tr>
+		 <td><font color="cccccc">[% result.cust_id %]</font></td>
+		 <td>[% result.cust_name %]</td>
+		 <td>[% result.email_add1 %]</td>
+		 <td>[% result.phone1 %]</td>
+		</tr>
+		<tr>
+		 <td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+		 <th align="left" bgcolor="eeeeee" colspan=4>Additional Details</th>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Address 1</font><td colspan=4>[% result.address1 %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Address 2</font><td colspan=4>[% result.address2 %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">City</font><td colspan=4>[% result.city %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">State</font><td colspan=4>[% result.state %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Country</font><td colspan=4>[% result.country %]</td>
+		</tr>
+		<tr>
+		 <td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+		 <th align="left" bgcolor="eeeeee" colspan=4>Alternative Contact Details</th>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Phone</font><td colspan=4>[% result.phone2 %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Email</font><td colspan=4>[% result.email_add2 %]</td>
+		</tr>
+		<tr>
+		 <td><font color="cccccc">Account Manager</font><td colspan=4>[% result.account_manager %]</td>
+		</tr>
+	[% END %]
+		<tr>
+		 <td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+	 	 <td align="left" colspan="4"><a href="/customers/[% result.cust_id %]/edit">Update Details</a></td>
+		</tr>
+	</table>

@@ -1,0 +1,32 @@
+        <h2>Add Customer To Database</h2>
+	<strong><font color="cccccc">Contact Details</font></strong>
+	<br>
+	<br>
+	<form name="custAdd1" method="POST" action="/customers/add">
+	<table cellpadding="10" border=0 align=center>
+	<tr align="left"><th width=125 >Customer Name</th><th>:</th><td><input type=text width=30 name="custName"></td></tr>
+	<tr align="left"><th>Email Address</th><th>:</th><td><input type=text width=30 name="custEmail"></td></tr>
+	<tr align="left"><th>Telephone</th><th>:</th><td><input type=text width=30 name="custPhone"></td></tr>
+	</table>
+	<br>
+	<strong><font color="cccccc">Address Details</font></strong>
+	<br>
+	<br>
+	<table>
+	<tr align="left"><th width="125">Address1</th><th>:</th><td><input type="textbox" size="80" name="address1"></td></tr>
+	<tr align="left"><th width="125">Address2</th><th>:</th><td><input type="textbox" size="80" name="address2"></td></tr>
+	<tr align="left"><th width="125">City</th><th>:</th><td><input type="textbox" size="80" name="city"></td></tr>
+	<tr align="left"><th width="125">State</th><th>:</th><td><input type="textbox" size="80" name="state"></td></tr>
+	</table>
+	<br>
+	<strong><font color="cccccc">Account Manager / Responsibility</font></strong>
+	<br>
+	<br>
+	<table cellpadding="10" border=0 align=center>
+	<tr align="left"><th width=125 >Name</th><th>:</th><td><input type=text width=30 name="accountManager"></td></tr>
+	</table>
+	<br>
+	<input type=submit name="custAddSubmit" width="125" value="Click Here To Submit">
+	</form>
+	
+	

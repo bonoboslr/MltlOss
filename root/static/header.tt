@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="/static/css/variant.css" media="screen,projection" title="Variant Portal" />
+<title>MLTL OSS</title>
+</head>
+
+<body>
+<div id="container">
+
+<div id="toplinks">
+<p><a href="/login?logout=yes">logout</a> <!-- &middot; <a href="#">Link 2</a> &middot; <a href="#">Link 3</a> &middot; <a href="#">Link 4</a>--></p>
+</div>
+
+<div id="logo">
+<h1><a href="/">Multilinks OSS Portal</a></h1>
+<p>Everything you need [% username %] is here in one place...</p>
+
+</div>
+
+[% INCLUDE navitab.tt %]
+
+[% INCLUDE description.tt %]
+
+[% IF ( page == 'customer' || page == 'customer_add' || page == 'customer_added' || page == 'customer_search' || page == 'customer_search_res' || page == 'customer_modify' || page == 'customer_modified') %]
+	[% INCLUDE main_customers.tt %]
+[% ELSE %]
+	[% INCLUDE main.tt %]
+[% END %]
+
+[% INCLUDE sidebar1.tt %]
+
+[% INCLUDE sidebar2.tt %]
+
+[% INCLUDE footer.tt %]
