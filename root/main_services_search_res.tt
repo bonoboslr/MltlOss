@@ -9,24 +9,33 @@
 		 <td>[% result.point_a %]</td>
 		 <td>[% result.point_b%]</td>
 		</tr>
-		<tr>
-		 <th align="left" bgcolor="eeeeee" colspan=4>Base Station Details</th>
-		</tr>
-		<tr>
-		 <td><font color="cccccc">Address 1</font><td colspan=4>[% result.address1 %]</td>
-		</tr>
-		<tr>
-		 <td><font color="cccccc">Address 2</font><td colspan=4>[% result.address2 %]</td>
-		</tr>
-		<tr>
-		 <td><font color="cccccc">City</font><td colspan=4>[% result.city %]</td>
-		</tr>
-		<tr>
-		 <td><font color="cccccc">State</font><td colspan=4>[% result.state %]</td>
-		</tr>
-		<tr>
-		 <td><font color="cccccc">Country</font><td colspan=4>[% result.country %]</td>
-		</tr>
-		</tr>
 	[% END %]
+		<tr>
+		 <td colspan=4>&nbsp;</td>
+		</tr>
+		<tr>
+		 <td colspan=4><strong>Dependent Sites For This Service</strong></td>
+		<tr>
+		 <td colspan=4>&nbsp;</td>
+		</tr>
+		[% FOREACH site IN test %]
+			<tr>
+		 	 <th align="left" bgcolor="eeeeee" colspan=4>Information Details for [% site.site_name %]</th>
+			</tr>
+			<tr>
+		 	 <td><font color="cccccc">Site Reference</font><td colspan=4>[% site.site_reference %]</td>
+			</tr>
+			<tr>
+		 	 <td><font color="cccccc">GPS Co-ordinates</font><td colspan=4>[% site.gps_coords %]</td>
+			</tr>
+			<tr>
+		 	 <td><font color="cccccc">Site Type</font><td colspan=4>[% site.site_type %]</td>
+			</tr>
+			<tr>
+		 	 <td><font color="cccccc">Dependent Site</font><td colspan=4>[% site.site_dependency %]</td>
+			</tr>
+			<tr>
+		 	 <td><font color="cccccc">Site ID</font><td colspan=4>[% site.site_id %]</td>
+			</tr>
+		[% END %]
 	</table>

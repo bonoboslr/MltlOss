@@ -48,12 +48,33 @@ sub root : Chained("base") : PathPart("") : Args(0) {
 sub view : Chained('base') : PathPart('') Args(1) {
         my ($self, $c, $serviceid) = @_;
         my $log = $c->log;
+	my @siteset;
+
         if ($c->session->{logged_in}) {
+		# Send Username to the stash
                 my $user = $c->session->{username};
                 $c->stash->{username} = $user;
+		
+		# Search for Services
                 $c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
                                                         service_id => $serviceid })]);
+		my $rs = $c->model('MltlDB::ServicesInterm')->search( {
+					 service_id => '3',
+				});
 
+		# link services to sites
+		my $rs = $c->model('MltlDB::ServicesInterm')->search( {
+                                         service_id => $serviceid, });
+		while (my $u = $rs->next) {
+			push(@siteset, $u->site);
+			$log->info("Site Name : $u->site.site_name");
+		
+		}
+		
+		# Send site info to the stash
+		@{$c->stash->{test}} = @siteset;
+
+		# Send page name and send to the template
                 $c->stash->{page} = 'services_search_res';
                 $c->session->{service_id} = $serviceid;
                 $c->forward('end');
@@ -61,8 +82,6 @@ sub view : Chained('base') : PathPart('') Args(1) {
 		# Redirect to Login
                 $c->response->redirect('/');
         }
-
-
 }
 
 
