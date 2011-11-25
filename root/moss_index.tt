@@ -1,0 +1,27 @@
+[% IF logged_in == "1" %]
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+                                <div id="slogan">
+                                        <h2><a href="/">HOME</a></h2>
+                                        <h2>
+					Welcome to the MOSS platform. 
+                                        </h2>
+                                </div>
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+        <div id="ad">
+                MOSS is Multilinks' in-house designed and developed OSS management platform.
+        </div>
+
+	[% INCLUDE static/moss_footer.tt %]
+[% ELSE %]
+
+[% END %]

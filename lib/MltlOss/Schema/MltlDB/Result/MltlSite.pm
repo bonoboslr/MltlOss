@@ -63,6 +63,13 @@ __PACKAGE__->table("mltl_sites");
   is_nullable: 1
   size: 100
 
+=head2 site_owner
+
+  data_type: VARCHAR
+  default_value: undef
+  is_nullable: 1
+  size: 45
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -104,11 +111,46 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 100,
   },
+  "site_owner",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 45,
+  },
 );
 __PACKAGE__->set_primary_key("site_id");
 __PACKAGE__->add_unique_constraint("site_reference_UNIQUE", ["site_reference"]);
 
 =head1 RELATIONS
+
+=head2 links_pointa_siteids
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::Link>
+
+=cut
+
+__PACKAGE__->has_many(
+  "links_pointa_siteids",
+  "MltlOss::Schema::MltlDB::Result::Link",
+  { "foreign.pointa_siteid" => "self.site_id" },
+);
+
+=head2 links_pointb_siteids
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::Link>
+
+=cut
+
+__PACKAGE__->has_many(
+  "links_pointb_siteids",
+  "MltlOss::Schema::MltlDB::Result::Link",
+  { "foreign.pointb_siteid" => "self.site_id" },
+);
 
 =head2 services_interms
 
@@ -125,8 +167,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-21 21:25:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:VCwThx5B2BxKEtoa/iTGpQ
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-23 13:18:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aAXyKR2w7dFEEKWSw58yNQ
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

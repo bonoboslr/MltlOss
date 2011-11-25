@@ -1,0 +1,83 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_customer_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Customer Details</div>
+        	<form name="custSearch1" method="POST" action="/customers/search" class="searchform">
+		[% FOREACH customer IN custSearchResults %]
+		[% custid = customer.cust_id %]
+        	<table border=0>
+        	<tr align="left"><th width="125">Name</th><td>[% customer.cust_name %]</td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Telephone</th><td>[% customer.phone1 %]</td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Email</th><td>[% customer.email_add1%]<l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Address1</th><td colspan="3" width="400">[% customer.address1 %]</td></tr>
+        	<tr align="left"><th>Address2</th><td colspan="3">[% customer.address2 %]</td></tr>
+        	<tr align="left"><th>City</th><td>[% customer.city%]<l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>State</th><td>[% customer.state%]<l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Account Manager</th><td>[% customer.account_manager %]<l/td><td colspan="2"></td></tr>
+        	</table>
+        	</form>
+		<br>
+		<br>
+		<a href="/customers/[% customer.cust_id %]/edit">Edit Customer Details</a>
+		[% END %]
+
+		<div class="date">Associated Services</div>
+		<form class="searchform">
+		<table border=0>
+		<tr>
+		 <th align="left">ServiceID</th>
+                 <th align="left">Status</th><th align="left" width="425">Description</th>
+		</tr>
+		[% FOREACH service IN custServiceResults %]
+		<tr>
+		 <td>[% service.service_id %]</td>
+		 <td>[% service.service_status %]</td>
+		 <td><a href="/service/[% service.service_id %]">[% service.service_description %] from [% service.point_a %] to [% service.point_b %]</a></td>
+		</tr>
+		[% END %]
+		</table>
+		</form>
+		<br>
+		<br>
+		<a href="/service/add/[% custid %]">Add Service</a>
+
+		<div class=date>Comments</div>
+		<form name="addcustComment" action="/customers/[% custid %]/addcomment" method="POST">
+		<textarea name="commentBox" cols="75" rows="3"></textarea>
+		<input type=submit name="custDetailsComment" value="Add Comment">
+		</form>
+		<br>
+		<br>
+		<div class="date">Comment History</div>
+		<table border="0">
+		<tr>
+		 <th align="left">Date</th><th align="left">Comment</th><th align="left">Added By</th>
+		</tr>
+		[% FOREACH comment IN customerComments.reverse %]
+		<tr>
+		 [% time = comment.comment_date.iso8601.split('T') %]
+		 <td><font size="1">[% time.0 %] [% time.1 %]</font></td><td width="350">[% comment.comment_detail %]</td><td>[% comment.comment_by.first_name %] [% comment.comment_by.surname %]</td>
+		</tr>
+		[% END %]
+		</table>
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

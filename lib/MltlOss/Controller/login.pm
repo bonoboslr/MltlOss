@@ -21,17 +21,11 @@ Catalyst Controller.
 
 =cut
 
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
+sub base :Chained("/") : PathPart("login") : CaptureArgs(0) { }
+
+sub root :Chained("base") : PathPart("") Args(0) {
+    	my ( $self, $c ) = @_;
 	my $log = $c->log;
-
-	if ($c->req->param("logout")) {
-                $c->delete_session;
-                $c->stash->{logged_in} = 0;
-                $c->response->redirect('/');
-        }
-
-        else {
 
                 if ($c->authenticate({ id => $c->req->param("username"), password => $c->req->param("password") }))
                 {
@@ -41,16 +35,15 @@ sub index :Path :Args(0) {
                         $c->stash->{logged_in} = 1;
                         $c->session->{logged_in} = 1;
                         $c->response->redirect('/');
-                        $c->stash(template => 'index.tt');
+                        $c->stash(template => 'moss_index.tt');
                         $c->forward('MltlOss::View::MltlOss');
                       
                 } else {
                     
                         $c->stash->{logged_in} = 0;
-                        $c->stash(template => 'index.tt');
+                        $c->stash(template => 'moss_index.tt');
                         $c->forward('MltlOss::View::MltlOss');
                 }
-      	}
 
 }
 

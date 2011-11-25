@@ -103,7 +103,7 @@ __PACKAGE__->table("mltl_customers");
   data_type: VARCHAR
   default_value: undef
   is_nullable: 1
-  size: 6
+  size: 20
 
 =cut
 
@@ -187,7 +187,12 @@ __PACKAGE__->add_columns(
     size => 70,
   },
   "account_manager",
-  { data_type => "VARCHAR", default_value => undef, is_nullable => 1, size => 6 },
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 20,
+  },
 );
 __PACKAGE__->set_primary_key("cust_id");
 
@@ -222,8 +227,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-21 21:25:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:P89zxRCzA7cEqkY4YqYZfw
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-23 13:18:57
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oiFvgCwE5JpZHfPgyQl6dw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

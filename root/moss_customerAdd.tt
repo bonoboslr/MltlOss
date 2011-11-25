@@ -1,0 +1,37 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_customer_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+        	<form name="custAdd1" method="POST" action="/customers/add" class="searchform">
+		<br>
+        	<strong><font color="cccccc">Contact Details</font></strong>
+        	<table border=0>
+        	<tr align="left"><th>Name</th><td><input class="searchfield" type=text name="custName"></td><th>Email Address</th><td><input class="searchfield" type=text size="30" name="custEmail"></td></tr>
+        	<tr align="left"><th>Telephone</th><td><input class="searchfield" type=text name="custPhone"></td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Address1</th><td colspan="3"><input type="textbox" class="searchfield1" name="address1"></td></tr>
+        	<tr align="left"><th>Address2</th><td colspan="3"><input type="textbox" class="searchfield1" size="150" name="address2"></td></tr>
+        	<tr align="left"><th>City</th><td colspan="2"><input type="textbox" class="searchfield" size="150" name="city"></td><td></td></tr>
+        	<tr align="left"><th>State</th><td colspan="2"><input type="textbox" class="searchfield" size="15" name="state"></td><td></td></tr>
+		<tr align="left"><th>Account Manager</th><td colspan="2"><input type="textbox" name="accountManager" class="searchfield"></td><td><input type=submit name="custAddSubmit" value="Add Customer"></td></tr>
+        	</table>
+		<br>
+        </form>
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

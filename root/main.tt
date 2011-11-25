@@ -1,8 +1,5 @@
 <div id="main">
-	<h2>[% username %]'s Dashboard</h2>
+	<h2>[% username %] &raquo; Dashboard</h2>
         <p>Information pertaining to the individual user will go here.</p>
         <p class="block"><strong>Test Text in a Box.</p>
-        <h3>More Stuff</h3>
-        <p>.</p>
-        <p>Version: 0.1 (Nov, 2011)</p>
 </div>

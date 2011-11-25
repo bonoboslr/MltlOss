@@ -12,9 +12,7 @@
 [% ELSIF page == 'customer_modified' %]
 	[% INCLUDE main_customers_modified.tt %]
 [% ELSE %]
-	<h2>Customer Information Dashboard</h2>
-        <p>Information pertaining to Customer Info will go here.</p>
+	<h3>Customer Information Dashboard</h3>
         <p class="block"><strong>Ticket information to go here</p>
-        <h3>More Stuff</h3>
 [% END %]
 </div>

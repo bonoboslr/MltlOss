@@ -52,6 +52,14 @@ __PACKAGE__->table("services_interm");
   is_nullable: 0
   size: 11
 
+=head2 link_id
+
+  data_type: INT
+  default_value: undef
+  is_foreign_key: 1
+  is_nullable: 0
+  size: 11
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -87,6 +95,14 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 11,
   },
+  "link_id",
+  {
+    data_type => "INT",
+    default_value => undef,
+    is_foreign_key => 1,
+    is_nullable => 0,
+    size => 11,
+  },
 );
 __PACKAGE__->set_primary_key("interm_id");
 
@@ -104,6 +120,21 @@ __PACKAGE__->belongs_to(
   "customer",
   "MltlOss::Schema::MltlDB::Result::MltlCustomer",
   { cust_id => "customer_id" },
+  {},
+);
+
+=head2 link
+
+Type: belongs_to
+
+Related object: L<MltlOss::Schema::MltlDB::Result::Link>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "link",
+  "MltlOss::Schema::MltlDB::Result::Link",
+  { link_id => "link_id" },
   {},
 );
 
@@ -138,8 +169,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-21 21:25:06
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eAyuuJYIawUb3VfnhhvRDQ
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-25 09:30:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:B2DL6KooEeU7Urv3Q0dYHg
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

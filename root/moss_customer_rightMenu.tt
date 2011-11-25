@@ -1,0 +1,22 @@
+               <div id="right_side">
+                        <h3>Additional Actions</h3>
+                        <ul>
+                                                        <li><a href="#" title="Modify Details">Modify Customer Details</a></li>
+                                                        <li><a href="#" title="Add New Service">Add New Service</a></li>
+                                                        <li><a href="#" title="View History">View Customer History</a></li>
+
+                        </ul>
+
+                        <h3>Directory</h3>
+                        <p><a href="http://www.links4se.com" title="SEO friendly directory">Links4se.com</a> is a seo-friendly and human-edited general directory. Featured links need to be paid only $4.95 for unlimited time and regular links only $1.95!</p>
+                        <h3>Latest Articles</h3>
+                        <ul>
+                                                        <li><a href="#" title="#">I would like to send big thanks to...</a></li>
+                                                        <li><a href="#" title="#">This simple tutorial will show you...</a></li>
+                                                        <li><a href="#" title="#">To make this nice fade effect I...</a></li>
+                                                        <li><a href="#" title="#">If you want to advertise your...</a></li>
+                                                        <li><a href="#" title="#">This has to be one of the better...</a></li>
+                                                        <li><a href="#" title="#">This day I would like to share...</a></li>
+
+                        </ul>
+                </div>

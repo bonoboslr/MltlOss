@@ -36,12 +36,21 @@ sub index :Path :Args(0) {
 		$c->stash->{logged_in} = 1;
 		$c->stash->{page} = 'start';
                 $log->info("Connect to Database and get userid");
-		$c->stash(template => 'index.tt');
+		$c->stash(template => 'moss_index.tt');
                 $c->forward('MltlOss::View::MltlOss');
 	} else {
-	        $c->stash(template => 'login.tt');
+	        $c->stash(template => 'static/moss_login.tt');
                 $c->forward('MltlOss::View::MltlOss');
 	}
+}
+
+sub logout :Local :Args(0) {
+        my ( $self, $c ) = @_;
+        my $log = $c->log;
+
+                $c->delete_session;
+                $c->stash->{logged_in} = 0;
+		$c->response->redirect('/');
 }
 
 =head2 default

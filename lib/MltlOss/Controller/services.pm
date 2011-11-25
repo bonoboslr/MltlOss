@@ -49,6 +49,7 @@ sub view : Chained('base') : PathPart('') Args(1) {
         my ($self, $c, $serviceid) = @_;
         my $log = $c->log;
 	my @siteset;
+	my @linkset;
 
         if ($c->session->{logged_in}) {
 		# Send Username to the stash
@@ -58,21 +59,19 @@ sub view : Chained('base') : PathPart('') Args(1) {
 		# Search for Services
                 $c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
                                                         service_id => $serviceid })]);
-		my $rs = $c->model('MltlDB::ServicesInterm')->search( {
-					 service_id => '3',
-				});
 
-		# link services to sites
+		# link services to links
 		my $rs = $c->model('MltlDB::ServicesInterm')->search( {
                                          service_id => $serviceid, });
 		while (my $u = $rs->next) {
 			push(@siteset, $u->site);
-			$log->info("Site Name : $u->site.site_name");
+			push(@linkset, $u->link);
 		
 		}
-		
-		# Send site info to the stash
-		@{$c->stash->{test}} = @siteset;
+
+		# Send link info to the stash
+		@{$c->stash->{sites}} = @siteset;
+		@{$c->stash->{links}} = @linkset;
 
 		# Send page name and send to the template
                 $c->stash->{page} = 'services_search_res';

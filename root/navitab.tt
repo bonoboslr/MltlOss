@@ -2,9 +2,9 @@
 <ul id="navitab">
 
 [% IF page == 'start' %]
-<li><a class="current" href="/">Start</a></li>
+<li><a class="current" href="/">Dashboard</a></li>
 [% ELSE %]
-<li><a href="/">Start</a></li>
+<li><a href="/">Dashboard</a></li>
 [% END %]
 
 [% IF (page == 'customer_info' || page == 'customer_add' || page == 'customer_added' || page == 'customer_search' || page == 'customer_search_res' || page == 'customer_modify') || page == 'customer_modified' %]
@@ -17,6 +17,12 @@
 <li><a class="current" href="/service">Enterprise Services</a></li>
 [% ELSE %]
 <li><a href="/service">Enterprise Services</a></li>
+[% END %]
+
+[% IF (page == 'sites' || page == 'sites_search_res') %]
+<li><a class="current" href="/site">Site Management</a></li>
+[% ELSE %]
+<li><a href="/site">Site Management</a></li>
 [% END %]
 
 [% IF username == 'scott' %]

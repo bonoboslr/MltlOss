@@ -1,0 +1,47 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_customer_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Modify Customer Details</div>
+		[% FOREACH customer IN custSearchResults %]
+		[% custid = customer.cust_id %]
+        	<form name="custSearch1" method="POST" action="/customers/[% custid %]/edit" class="searchform">
+        	<table border=0>
+        	<tr align="left"><th width="125">Name</th><td><input name="custName" value="[% customer.cust_name %]"></td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Telephone1</th><td><input type="text" name="custPhone1" value="[% customer.phone1 %]"></td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Telephone2</th><td><input type="text" name="custPhone2" value="[% customer.phone2 %]"></td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Email1</th><td><input type="text" name="custEmail1"value="[% customer.email_add1%]"><l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Email2</th><td><input type="text" name="custEmail2"value="[% customer.email_add2%]"><l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Address1</th><td colspan="3" width="400"><input name="address1" type="text" value="[% customer.address1 %]"></td></tr>
+        	<tr align="left"><th>Address2</th><td colspan="3"><input type="text" name="address2" value="[% customer.address2 %]"></td></tr>
+        	<tr align="left"><th>City</th><td><input type="text" name="city" value="[% customer.city%]"><l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>State</th><td><input type="text" name="state" value="[% customer.state%]"><l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Account Manager</th><td><input type="text" name="accountManager" value="[% customer.account_manager %]"><l/td><td colspan="2"></td></tr>
+        	</table>
+		<input type="submit" name="modifyCustomer" value="Click to Modify">
+		<br>
+		<br>
+        	</form>
+		<br>
+		<br>
+		[% END %]
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]
