@@ -36,6 +36,16 @@
 		<br>
 		<a href="/customers/[% customer.cust_id %]/edit">Edit Customer Details</a>
 		[% END %]
+		
+		<div class="date">Add New Service</div>
+		<form class="searchform" name="addNewService" action="/customers/[% custid %]/addservice" method="POST">
+		<table border=0>
+		<tr align="left"><th>Point A</th><td><input type="text" name="pointA"></td></tr>
+		<tr align="left"><th>Point B</th><td><input type="text" name="pointB"></td></tr>
+		<tr align="left"><th>Service Descripton</th><td><input type="text" class="searchfield1" name="serviceDescription"></td></tr>
+		<tr align="left"><td colspan="2"><input type=submit name="addServiceSubmit" value="Add Service"></td></tr>
+		</table>
+		</form>
 
 		<div class="date">Associated Services</div>
 		<form class="searchform">
@@ -48,7 +58,7 @@
 		<tr>
 		 <td>[% service.service_id %]</td>
 		 <td>[% service.service_status %]</td>
-		 <td><a href="/service/[% service.service_id %]">[% service.service_description %]</a></td>
+		 <td><a href="/service/[% service.service_id %]">[% service.service_description %] from [% service.point_a %] to [% service.point_b %]</a></td>
 		</tr>
 		[% END %]
 		</table>

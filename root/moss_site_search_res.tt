@@ -1,0 +1,91 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_site_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Site Details</div>
+        	<form name="custSearch1" method="POST" action="/customers/search" class="searchform">
+		[% FOREACH site IN siteSearchResults %]
+		[% siteid = site.site_id %]
+        	<table border=0>
+        	<tr align="left"><th width="125">Site Name</th><td>[% site.site_name %]</td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Site Reference</th><td>[% site.site_reference %]</td><td colspan="2"></td></tr>
+        	<tr align="left"><th>Site Type</th><td>[% site.site_type %]<l/td><td colspan="2"></td></tr>
+        	<tr align="left"><th>GPS Co-ordinates</th><td colspan="3" width="400">[% site.gps_coords %]</td></tr>
+        	<tr align="left"><th>Site Owner</th><td colspan="3">[% site.site_owner %]</td></tr>
+        	</table>
+        	</form>
+		<br>
+		<br>
+		<a href="/site/[% site.site_id %]/edit">Edit Site Details</a>
+		[% END %]
+
+		<div class="date">Associated Links</div>
+		<form class="searchform">
+		<table border=0>
+		<tr>
+		 <th align="left" width="50">Link ID</th>
+                 <th align="left">Status</th><th align="left" width="125">Description</th>
+                 <th align="left">PointA Site</th>
+                 <th align="left">PointB Site</th>
+                 <th align="left">Link Type</th>
+		 <th align="left">Link Owner</th>
+		</tr>
+		[% FOREACH link IN linksearchResults %]
+		<tr>
+		 <td><a href="/link/[% link.link_id %]">[% link.link_id %]</td>
+		 <td>[% link.status %]</td>
+		 <td>[% link.link_description %]</td>
+		 <td align="left"><a href="/site/[% link.pointa_siteid.site_id %]">[% link.pointa_siteid.site_name %]</a></th>
+		 <td align="left"><a href="/site/[% link.pointb_siteid.site_id %]">[% link.pointb_siteid.site_name %]</a></th>
+		 <td>[% link.link_type %]</td>
+		 <td>[% link.owner %]</td>
+		</tr>
+		<tr>
+		 <th align="left" colspan="2">Contact Details</th><td colspan="5">[% link.contact %] - [% link.contact_phone %]</td>
+		</tr>
+		[% END %]
+		</table>
+		</form>
+		<br>
+		<br>
+		<a href="/site/add/[% siteid %]">Add An Additional Link To This Site</a>
+
+		<div class=date>Comments</div>
+		<form name="addSiteComment" action="/site/[% siteid %]/addcomment" method="POST">
+		<textarea name="commentBox" cols="75" rows="3"></textarea>
+		<input type=submit name="siteDetailsComment" value="Add Comment">
+		</form>
+		<br>
+		<br>
+		<div class="date">Comment History</div>
+		<table border="0">
+		<tr>
+		 <th align="left">Date</th><th align="left">Comment</th><th align="left">Added By</th>
+		</tr>
+		[% FOREACH comment IN siteComments.reverse %]
+		<tr>
+		 [% time = comment.comment_date.iso8601.split('T') %]
+		 <td><font size="1">[% time.0 %] [% time.1 %]</font></td><td width="350">[% comment.comment_detail %]</td><td>[% comment.comment_by.first_name %] [% comment.comment_by.surname %]</td>
+		</tr>
+		[% END %]
+		</table>
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

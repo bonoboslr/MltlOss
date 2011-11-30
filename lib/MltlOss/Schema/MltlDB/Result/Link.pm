@@ -86,6 +86,13 @@ __PACKAGE__->table("links");
   is_nullable: 1
   size: 150
 
+=head2 link_type
+
+  data_type: VARCHAR
+  default_value: undef
+  is_nullable: 1
+  size: 45
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -150,6 +157,13 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 150,
   },
+  "link_type",
+  {
+    data_type => "VARCHAR",
+    default_value => undef,
+    is_nullable => 1,
+    size => 45,
+  },
 );
 __PACKAGE__->set_primary_key("link_id");
 
@@ -200,8 +214,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-23 13:18:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dYhyr//vb+EaaV5PFE4iKg
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-30 11:55:53
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4zdJOv4Q1/3i+8MYIMv+cw
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

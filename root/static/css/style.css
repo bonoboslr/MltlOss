@@ -15,8 +15,8 @@ body {
 	
 a { color: #DA3B3B; background: inherit; }
 a:hover { color: #DA3B3B; background: inherit; text-decoration: underline}
-p {	margin: 5px 0; }
-h1 {	font: bold 1.8em Arial, Sans-Serif; padding: 8px 0 4px 0; margin: 0; letter-spacing: -1px; }
+p {	margin: 2px 0; }
+h1 {	font: bold 1.8em Arial, Sans-Serif; padding: 5px 0 4px 0; margin: 0; letter-spacing: -1px; }
 h2 { font: bold 1.6em Arial, Sans-Serif; letter-spacing: -1px; }
 h3 { padding: 4px 0; margin:  0; }
 ul { margin: 0; padding : 0; list-style: none; }
@@ -69,7 +69,7 @@ hr { height: 1px; border-style: none; color: #d0d0d0; background-color: #C0C0C0;
 		#left_side p { color: #454545; padding: 0 5px 0 5px; text-align: justify }
 		#left_side img { float: left; padding: 0 10px 5px 0 }
 		#left_side blockquote { padding-left: 10px; border-left: 2px solid #DA4040; margin: 10px 0 10px 25px; }
-		.date { font: bold 1.0em Arial; border-top: 1px dotted #ccc; padding: 5px 0; margin: 0px 0 0px 0; text-align: right }		
+		.date { border-top: 1px dotted #ccc; padding: 5px 0; margin: 10px 0 25px 0; text-align: right }		
 		#left_side .rs { float: right; margin: 0 10px; border: 1px solid #ddd; padding: 5px; background: #f5f5f5  }
 		#left_side ul { list-style-position: inside; margin-left: 2px }
 		#left_side ul li { list-style-type: square; margin-left: 15px;  }

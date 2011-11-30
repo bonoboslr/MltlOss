@@ -1,0 +1,95 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_customer_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Modify Link Details</div>
+		[% FOREACH link IN linkSearchResults %]
+		[% linkid = link.link_id %]
+        	<form name="custSearch1" method="POST" action="/link/[% linkid %]/edit" class="searchform">
+        	<table border="0">
+        	<tr align="left">
+        	<th>Description</th>
+        	<td><input type="text" class="searchfield1" name="linkDescription" value="[% link.link_description %]"</td>
+        	</tr>
+        	<tr align="left">
+        	<th width="125">Point A</th>
+        	<td><select class="searchfield" name="siteA">
+        	 [% FOREACH site IN siteSearchResults %]
+        		[% IF link.pointa_siteid.site_id == site.site_id %]
+        			<option selected="selected" value="[% site.site_id %]">[% site.site_name %]</option>
+        		[% ELSE %]
+        			<option value="[% site.site_id %]">[% site.site_name %]</option>
+        		[% END %]
+        	 [% END %]
+        	</select></td>
+        	</tr>
+        	
+        	<tr align="left">
+        	<th width="125">Point B</th>
+        	<td><select class="searchfield" name="siteB">
+        	[% FOREACH site IN siteSearchResults %]
+        		[% IF link.pointb_siteid.site_id == site.site_id %]
+        			<option selected="selected" value="[% site.site_id %]">[% site.site_name %]</option>
+        		[% ELSE %]
+        			<option value="[% site.site_id %]">[% site.site_name %]</option>
+        		[% END %]
+        	[% END %]
+        	</select></td>
+        	
+        	</tr>
+        	<tr align="left">
+        	<th>Owner</th>
+        	<td><input type="text" class="searchfield" name="owner" value="[% link.owner %]"></td>
+        	</tr>
+        	
+        	</tr>
+        	<tr align="left">
+        	<th>Speed</th>
+        	<td><input type="text" class="searchfield" name="speed" value="[% link.speed %]">Mb/s</td>
+        	</tr>
+        	
+        	</tr>
+        	<tr align="left">
+        	<th>Link Type</th>
+        	<td><input type="text" class="searchfield" name="linkType" value="[% link.link_type %]"></td>
+        	</tr>
+        	        	
+        	</tr>
+        	<tr align="left">
+        	<th>Contact Person</th>
+        	<td><input type="text" class="searchfield" name="contact" value="[% link.contact %]"></td>
+        	</tr>        	
+        	
+        	</tr>
+        	<tr align="left">
+        	<th>Contact Phone</th>
+        	<td><input type="text" class="searchfield" name="contactPhone" value="[% link.contact_phone %]"</td>
+        	</tr>
+        	        	</table>
+		<input type="submit" name="modifyCustomer" value="Click to Modify">
+		<br>
+		<br>
+        	</form>
+		<br>
+		<br>
+		[% END %]
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

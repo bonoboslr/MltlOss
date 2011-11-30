@@ -198,6 +198,20 @@ __PACKAGE__->set_primary_key("cust_id");
 
 =head1 RELATIONS
 
+=head2 customer_comments
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::CustomerComment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "customer_comments",
+  "MltlOss::Schema::MltlDB::Result::CustomerComment",
+  { "foreign.customer_id" => "self.cust_id" },
+);
+
 =head2 enterprise_services
 
 Type: has_many
@@ -227,8 +241,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-23 13:18:57
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:oiFvgCwE5JpZHfPgyQl6dw
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-30 11:55:53
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KsHF4d1+8AaoyzzyX7Dp8A
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

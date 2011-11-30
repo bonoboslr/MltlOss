@@ -27,19 +27,25 @@ sub root :Chained("base") : PathPart("") Args(0) {
     	my ( $self, $c ) = @_;
 	my $log = $c->log;
 
-                if ($c->authenticate({ id => $c->req->param("username"), password => $c->req->param("password") }))
+               	if ($c->authenticate({ id => $c->req->param("username"), password => $c->req->param("password") }))
                 {
-			$log->info("User Logged In");
+												$log->info("User Logged In");
+												my $url = $c->req->param("url");
+												$log->info("$url");
                         $c->stash->{username} = $c->req->param("username");
                         $c->session->{username} = $c->req->param("username");
                         $c->stash->{logged_in} = 1;
                         $c->session->{logged_in} = 1;
-                        $c->response->redirect('/');
-                        $c->stash(template => 'moss_index.tt');
-                        $c->forward('MltlOss::View::MltlOss');
+                        if ($url eq '') {
+                        	$c->response->redirect('/');
+                        } else {
+                        	$c->response->redirect("$url");
+                        }
+                        #$c->stash(template => 'moss_index.tt');
+                        #$c->forward('MltlOss::View::MltlOss');
                       
                 } else {
-                    
+                    	$log->info("VERY WEIRD");
                         $c->stash->{logged_in} = 0;
                         $c->stash(template => 'moss_index.tt');
                         $c->forward('MltlOss::View::MltlOss');

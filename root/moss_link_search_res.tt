@@ -1,0 +1,68 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_service_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Service Details</div>
+		<div class="searchform">
+        	<table border=0>
+		<tr>
+		 <th align="left" width="75">Link ID</td><th align="left">Link Type</th><th align="left" width="175">Point A Location</th><th align="left" width="200" colspan="2">Point B location</th>
+		</tr>
+		[% FOREACH result IN linkSearchResults %]
+		[% linkid = result.link_id %]
+                	<tr>
+                 	 <td><font color="cccccc">[% result.link_id %]</font></td>
+                 	 <td>[% result.link_type %]</a></td>
+                 	 <td><a href="/site/[% result.pointa_siteid.site_id %]">[% result.pointa_siteid.site_name %]</a></td>
+                 	 <td><a href="/site/[% result.pointb_siteid.site_id %]">[% result.pointb_siteid.site_name %]</a></td>
+                	 <td colspan="4" width="100"><a href="/link/[% result.link_id %]/edit">Edit Link</a></td>
+                	 </tr>
+        	[% END %]
+		</table>
+		</div>
+		<br>
+		<br>
+	
+		<div class="date">Associated Services</div>
+		<table>
+		[% FOREACH service IN services %]
+                                <tr>
+                                        <th align="left" bgcolor="eeeeee" colspan=4>Service Description - [% service.service_description %]</th>
+                                </tr>
+                                <tr>
+                                <td><font color="cccccc">ServiceID</font><td colspan=4><a href="/service/[% service.service_id %]">[% service.service_id %]</a></td>
+                                </tr>
+                                <tr>
+                                        <td><font color="cccccc">CustomerID</font><td colspan=4><a href="/customers/[% service.customer_id %]">[% service.customer_id %]</a></td>
+                                </tr>
+                                <tr>
+                                <td><font color="cccccc">Point A Location</font><td colspan=4>[% service.point_a %]</td>
+                                </tr>
+                                <tr>
+                                <td><font color="cccccc">Point B Location</font><td colspan=4>[% service.point_b %]</td>
+                                </tr>
+                                <tr>
+                                <td><font color="cccccc">Service Status</font><td colspan=4>[% service.service_status %]</td>
+                                </tr>
+    [% END %]
+		</table>
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

@@ -1,0 +1,58 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_service_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Service Details</div>
+		<div class="searchform">
+        	<table border=0>
+		<tr>
+		 <th align="left" width="75">Service ID</td><th align="left">CustomerID</th><th align="left" width="175">Point A Location</th><th align="left" width="200" colspan="2">Point B location</th>
+		</tr>
+		[% FOREACH result IN custServiceResults %]
+		[% serviceid = result.service_id %]
+                	<tr>
+                 	 <td><font color="cccccc">[% result.service_id %]</font></td>
+                 	 <td><a href="/customers/[% result.customer_id %]">[% result.customer_id %]</a></td>
+                 	 <td>[% result.point_a %]</td>
+                 	 <td>[% result.point_b %]</td>
+                	 <td colspan="4" width="100"><a href="/service/[% result.service_id %]/edit">Edit Service</a></td>
+                	 </tr>
+        	[% END %]
+		</table>
+		</div>
+		<div class="date">Link Details</div>
+		<div class=searchform>
+		<form name="serviceAddLink" action="/service/[% serviceid %]/addlink" method="POST">
+		<table border="0">
+		<tr align="left">
+		 <th width="100">Select Link</th>
+		 <td width="450"><select class="searchfield" name="link">
+				[% FOREACH link IN linkSearchResults %]
+				<option value="[% link.link_id %]">[% link.link_type %] - [% link.speed %]Mb/s [% link.link_description %]</option>
+				[% END %]
+				</select></td>
+			<td><input type="submit" name="serviceAddLinkSubmit" value="Add Link to Service"></td>
+		</tr>
+		</table>
+		</form>
+		</div>
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

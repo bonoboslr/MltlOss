@@ -21,12 +21,6 @@ Catalyst Controller.
 
 =cut
 
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
-
-    $c->response->body('Matched MltlOss::Controller::services in services.');
-}
-
 # Construct Chain
 # Match the Root and display /services/
 sub base :Chained("/") : PathPart("service") : CaptureArgs(0) { }
@@ -37,8 +31,8 @@ sub root : Chained("base") : PathPart("") : Args(0) {
         if ($c->session->{logged_in}) {
                 my $user = $c->session->{username};
                 $c->stash->{username} = $user;
-                $c->stash->{page} = 'services';
-                $c->forward('end');
+                $c->stash(template => 'moss_service.tt');
+                $c->forward('MltlOss::View::MltlOss');
         } else {
                 # Redirect to Login
                 $c->response->redirect('/');
@@ -57,37 +51,94 @@ sub view : Chained('base') : PathPart('') Args(1) {
                 $c->stash->{username} = $user;
 		
 		# Search for Services
-                $c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
-                                                        service_id => $serviceid })]);
+		my $rs = $c->model('MltlDB::EnterpriseService')->search( {
+                                                        service_id => $serviceid });
+                #$c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
+               	                                    #service_id => $serviceid })]);
+		@{$c->stash->{custServiceResults}} = $rs->next;
 
 		# link services to links
 		my $rs = $c->model('MltlDB::ServicesInterm')->search( {
                                          service_id => $serviceid, });
 		while (my $u = $rs->next) {
-			push(@siteset, $u->site);
+			#push(@siteset, $u->site);
 			push(@linkset, $u->link);
 		
 		}
+		
+		# get the comments for this service
+		#$c->stash->(serviceComments = [$c->model('MltlDB::ServiceCommnets')->search( {
+		#				service_id => $serviceid})]);
 
 		# Send link info to the stash
-		@{$c->stash->{sites}} = @siteset;
+		# @{$c->stash->{sites}} = @siteset;
+		$log->info("@linkset");
 		@{$c->stash->{links}} = @linkset;
 
 		# Send page name and send to the template
-                $c->stash->{page} = 'services_search_res';
                 $c->session->{service_id} = $serviceid;
-                $c->forward('end');
+                $c->stash(template => 'moss_service_search_res.tt');
+                $c->forward('MltlOss::View::MltlOss');
 	} else {
 		# Redirect to Login
                 $c->response->redirect('/');
         }
 }
 
+sub mod : Chained('base') : PathPart('') CaptureArgs(1) { }
 
-sub end :Local :Args(0) {
-        my ( $self, $c ) = @_;
-                $c->stash(template => 'static/header.tt');
-                $c->forward('MltlOss::View::MltlOss');
+sub addlink : Chained('mod') :PathPart('addlink') Args(0) {
+	my ($self, $c, $serviceid) = @_;
+	my $log = $c->log;
+		
+		# Grab URI
+		my $url = $c->req->uri;
+	
+		# Split URI to get the custID
+		my @elements = split('/',$url);
+		my $service_id = $elements[4];
+	
+		# Check if user is logged in
+		if ($c->session->{logged_in}) {
+			$c->stash->{username} = $c->session->{username};
+			
+				if ($c->req->method eq "POST") {
+					
+					# Form Submitted
+					# The details submitted here need to be entered into the 
+					# intermidary table
+					
+					$c->model('MltlDB::ServicesInterm')->create( {
+						service_id => $service_id,
+						link_id => $c->req->param("link")
+					});
+					
+					$c->response->redirect("/service/$service_id");
+		
+				} else {
+		
+					# Search for Existing Service Details
+					# in the Enterprise Services table
+					my $rs = $c->model('MltlDB::EnterpriseService')->search( {
+   				service_id => $service_id });
+
+					@{$c->stash->{custServiceResults}} = $rs->next;
+		
+					# Pull out all the links - Hacky, but will improve with Location awareness on next release
+					$c->stash(linkSearchResults => [$c->model('MltlDB::Link')->search( { 
+					link_id => { like => '%' } } )
+				]);
+		
+					# Send to Stash
+					# Send to View
+					$c->stash(template => 'moss_serviceAddLink.tt');
+					$c->forward('MltlOss::View::MltlOss');
+				}
+		}  else {
+		# Redirect to Login
+  	$c->response->redirect('/');
+		}
+	
 }
 
 =head1 AUTHOR

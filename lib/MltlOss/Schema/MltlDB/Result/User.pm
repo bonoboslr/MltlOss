@@ -158,9 +158,51 @@ __PACKAGE__->has_many(
   { "foreign.comment_by" => "self.user_id" },
 );
 
+=head2 link_comments
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-25 09:30:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Xa3Nu8AEgpKcweWy1gH1Pw
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::LinkComment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "link_comments",
+  "MltlOss::Schema::MltlDB::Result::LinkComment",
+  { "foreign.comment_by" => "self.user_id" },
+);
+
+=head2 service_comments
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::ServiceComment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "service_comments",
+  "MltlOss::Schema::MltlDB::Result::ServiceComment",
+  { "foreign.comment_by" => "self.user_id" },
+);
+
+=head2 site_comments
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::SiteComment>
+
+=cut
+
+__PACKAGE__->has_many(
+  "site_comments",
+  "MltlOss::Schema::MltlDB::Result::SiteComment",
+  { "foreign.comment_by" => "self.user_id" },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-28 14:02:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eNY2IG1Pgkqt4ABGSFYu6A
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

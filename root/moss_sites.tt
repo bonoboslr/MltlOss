@@ -1,0 +1,18 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_site_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+        <div id="ad">
+                MOSS is Multilinks' in-house designed and developed OSS management platform.
+        </div>
+
+	[% INCLUDE static/moss_footer.tt %]

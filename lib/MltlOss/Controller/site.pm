@@ -21,17 +21,11 @@ Catalyst Controller.
 
 =cut
 
-#sub index :Path :Args(0) {
-    #my ( $self, $c ) = @_;
-
-    #$c->response->body('Matched MltlOss::Controller::services in services.');
-
-#}
-
 # Construct Chain
-# # Match the Root and display /services/
+# # Match the Root /site/
 sub base :Chained("/") : PathPart("site") : CaptureArgs(0) { }
 
+# Display the /site/
 sub root : Chained("base") : PathPart("") : Args(0) {
         my ($self, $c, $id) = @_;
         my $log = $c->log;
@@ -39,20 +33,122 @@ sub root : Chained("base") : PathPart("") : Args(0) {
         if ($c->session->{logged_in}) {
                 my $user = $c->session->{username};
                 $c->stash->{username} = $user;
-                $c->stash->{page} = 'sites';
-                $c->forward('end');
+	        $c->stash(template => 'moss_sites.tt');
+                $c->forward('MltlOss::View::MltlOss');
         } else {
                 # Redirect to Login
                 $c->response->redirect('/');
         }
 }
 
-sub end :Local :Args(0) {
-        my ( $self, $c ) = @_;
-                $c->stash(template => 'static/header.tt');
+# Match URL /site/*
+sub view :Chained('base') :PathPart('') Args(1) {
+        my ($self, $c, $site_id) = @_;
+        my $log = $c->log;
+        if ($c->session->{logged_in}) {
+                my $user = $c->session->{username};
+                $c->stash->{username} = $user;
+		        $c->stash(siteSearchResults => [$c->model('MltlDB::MltlSite')->search( {
+                        site_id =>  $site_id })]);
+                $c->stash(siteComments => [$c->model('MltlDB::SiteComment')->search( {
+                        site_id => $site_id })]);
+
+                # Search for Links Associated with the site
+                $c->stash(linksearchResults => [$c->model('MltlDB::Link')->search( {
+                            -or => [    pointa_siteid => $site_id,
+                                        pointb_siteid => $site_id,
+                                        ]
+                            })]);
+                # Search for Comments for the site
+                $c->session->{site_id} = $site_id;
+                $c->stash(template => 'moss_site_search_res.tt');
                 $c->forward('MltlOss::View::MltlOss');
+        } else {
+                # Redirect to Login
+                $c->response->redirect('/');
+        }
+
 }
 
+# Match URL /site/add
+sub insert :Chained("base") :PathPart("add") Args(0) {
+        my ( $self, $c ) = @_;
+        my $log = $c->log;
+
+        if ($c->session->{logged_in}) {
+                # Send user details to the stash
+                my $user = $c->session->{username}; 
+                $c->stash->{username} = $user; 
+
+                # Check if form submitted 
+                if ($c->req->method eq 'POST') {
+
+		            my $site = $c->model("MltlDB::MltlSite")->create({
+			        site_reference 	=> $c->req->param("siteRef"),
+			        gps_coords     	=> $c->req->param("gpsCoords"),
+			        site_type	=> $c->req->param("siteType"),
+			        site_name	=> $c->req->param("siteName"),
+			        site_owner	=> $c->req->param("siteOwner")
+		            });
+                    $c->stash(template => 'moss_siteAdded.tt');
+                    $c->forward('MltlOss::View::MltlOss');
+
+		        } else {
+		
+		            # Serve the Add Form
+                    $log->info("this is screwed");
+                    $c->stash(template => 'moss_siteAdd.tt');
+                    $c->forward('MltlOss::View::MltlOss');
+		}
+	} else {
+                # Redirect to Login
+                $c->response->redirect('/');
+	}
+}
+
+#   Subroutine searches for URL
+#   /site/<siteID>/addcomment
+#   The inputs the form details into the
+#   siteComments table
+
+sub mod : Chained("base") :PathPart('') :CaptureArgs(1) {}
+
+sub addsitecomment : Chained('mod') :PathPart('addcomment') Args(0) {
+    my ($self, $c) = @_;
+    my $log = $c->log;
+
+    if ($c->session->{logged_in}) {
+        # Send user details to the stash
+        my $user = $c->session->{username};
+        $c->stash->{username} = $user;
+
+        # Grab URI
+        my $url = $c->req->uri;
+        # Split the URI to get the siteID
+        my @elements = split('/',$url);
+        my $site_id = $elements[4];
+
+        # Get USERID from DB
+        my $rs = $c->model('MltlDB::User')->single( ({
+             username => $user }) );
+        my $userid = $rs->user_id;
+        
+        if ($c->req->method eq 'POST') {
+            my $comment =  $c->model("MltlDB::SiteComment")->create({
+                site_id     => $site_id,
+                comment_by  => $userid,
+                comment_detail  => $c->req->param("commentBox")
+                });
+
+            # Redirect back to site information
+            $c->response->redirect("/site/$site_id");
+        }
+    } else {
+        # Redirect to Login
+        $c->response->redirect('/');
+
+    }
+}
 
 =head1 AUTHOR
 

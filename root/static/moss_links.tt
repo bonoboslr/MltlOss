@@ -1,7 +1,7 @@
                                                 <ul>
                                                         <li><a href="/" title="home">HOME</a></li>
                                                         <li><a href="/customers" title="Customers">CUSTOMER MANAGEMENT</a></li>
-                                                        <li><a href="#" title="Enterprise Services">ENTERPRISE SERVICES</a></li>
-                                                        <li><a href="#" title="Site Management">SITE MANAGEMENT</a></li>
+                                                        <li><a href="/service" title="Enterprise Services">ENTERPRISE SERVICES</a></li>
+                                                        <li><a href="/site" title="Site Management">SITE MANAGEMENT</a></li>
                                                         <li><a href="#" title="Articles">TICKETS</a></li>
                                                 </ul>

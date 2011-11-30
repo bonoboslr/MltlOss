@@ -152,7 +152,6 @@ sub view :Chained('base') :PathPart('') Args(1) {
 							customer_id => $cust_id })]);
 		$c->stash(customerComments => [$c->model('MltlDB::CustomerComment')->search( {
 							customer_id => $cust_id })]);
-        	$c->stash->{page} = 'customer_search_res';
 		$c->session->{cust_id} = $cust_id;
     		$c->stash(template => 'moss_customer_search_res.tt');
     		$c->forward('MltlOss::View::MltlOss');
@@ -195,8 +194,9 @@ sub addcomment : PathPart('addcomment') Chained('mod') Args(0) {
                                         comment_detail	=> $c->req->param("commentBox")
                                         });
                         # Serve customer added form
-                        $c->stash(template => 'moss_commentAdded.tt');
-                        $c->forward('MltlOss::View::MltlOss');
+                        #$c->stash(template => 'moss_commentAdded.tt');
+                        #$c->forward('MltlOss::View::MltlOss');
+			$c->response->redirect("/customers/$cust_id");
 
 		}
 
@@ -206,6 +206,68 @@ sub addcomment : PathPart('addcomment') Chained('mod') Args(0) {
 
 	}
 
+}
+
+# Chain for Path /customers/*/addservice
+sub addservice : PathPart('addservice') Chained('mod') Args(0) {
+	my ($self, $c) = @_;
+	my $log = $c->log;
+
+	# Grab URI
+	my $url = $c->req->uri;
+	
+	# Split URI to get the custID
+	my @elements = split('/',$url);
+	my $cust_id = $elements[4];
+	
+	# Check if user is logged in
+	if ($c->session->{logged_in}) {
+		$c->stash->{username} = $c->session->{username};
+		
+		# Check if the form has been submitted
+		if ($c->req->method eq 'POST') {
+			
+			# Insert Service details into the Database
+			my $rs = $c->model('MltlDB::EnterpriseService')->create( {
+				customer_id => $cust_id,
+				service_description => $c->req->param("serviceDescription"),
+				point_a => $c->req->param("pointA"),
+				point_b => $c->req->param("pointB")
+			});
+			
+			# Update the Comments
+			my $pointA = $c->req->param("pointA");
+			my $pointB = $c->req->param("pointB");
+			my $rs = $c->model('MltlDB::CustomerComment')->create( {
+				customer_id => $cust_id,
+				comment_by => "2",
+				comment_detail => "Service $pointA to $pointB added"
+			});
+			
+			# Redirect to the customer view
+			$c->repsonse->redirect("/customers/$cust_id");
+			
+		} else {
+			
+			# Dig out customer info from DB
+			$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( {
+      	cust_id =>  $cust_id })]);
+			$c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
+				customer_id => $cust_id })]);
+			$c->stash(customerComments => [$c->model('MltlDB::CustomerComment')->search( {
+				customer_id => $cust_id })]);
+			
+			# Send customer_ID to the session
+			$c->session->{cust_id} = $cust_id;
+			
+			# Display the customer page with the Service Add From
+			$c->stash(template => 'moss_customerAddService.tt');
+			$c->forward('MltlOss::View::MltlOss');
+		}
+	} else {
+		# Redirect to Login
+		$c->response->redirect('/');
+	}
 }
 
 # Chain for path /customers/*/modify

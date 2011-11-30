@@ -4,6 +4,10 @@
                         <div id="pic">
                                 <div id="slogan">
 					<form action="/login" method="POST">
+					[% IF url %]
+						<input type="hidden" name="url" value=[% url %]>
+					[% ELSE %]
+					[% END %]
                                         <table>
                                         <tr>
                                          <th>Username<th><input type=text name="username"></th><td></td>

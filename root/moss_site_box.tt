@@ -1,0 +1,7 @@
+                                <div id="slogan">
+                                        <h2><a href="/">HOME</a>&rarr;<a href="/site/">SITE MANAGEMENT</a></h2>
+					<a href="/site/add">Add A New Site</a>
+					<br>
+					<br>
+					<a href="/link/add">Add A New Link</a>
+                                </div>

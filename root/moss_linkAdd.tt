@@ -1,0 +1,56 @@
+        [% INCLUDE static/moss_header.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_site_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+        	<form name="custAdd1" method="POST" action="/link/add" class="searchform">
+		<br>
+        	<strong><font color="cccccc">Add New Link</font></strong>
+		<br>
+		<br>
+        	<table border=1>
+        	<tr align="left"><th>Link Name</th><td colspan="3" width="400"><input class="searchfield1" type=text name="linkName"></td></tr>
+		<tr align="left"><th>Site A</th>
+				<td>
+				<select class="searchfield" name="siteA">
+				[% FOREACH site IN siteSearchResults %]
+				<option value="[% site.site_id %]">[% site.site_name %] - [% site.site_reference %]</option>
+				[% END %]
+				</select>
+				</td>
+
+		                <th width="75">Site B</th>
+				<td>
+				<select class="searchfield" name="siteB">
+				[% FOREACH site IN siteSearchResults %]
+				<option value="[% site.site_id %]">[% site.site_name %] - [% site.site_reference %]</option>
+				[% END %]
+				</select>
+				</td>
+				</tr>
+
+		<tr align="left"><th>Link Speed</th><td><input class="searchfield" type=text size="30" name="linkSpeed"></td>
+		                 <th width="75">Owner</th><td><input type="textbox" class="searchfield" size="150" name="linkOwner"></td></tr>
+		<tr align="left"><th>Link Contact</th><td><input type="textbox" name="linkContact" class="searchfield"></td><th>Contact Phone</th><td><input type="textbox" name="contactPhone" class="searchfield"></td></tr>
+		<tr align="left"><th>Link Type</th><td><input class="searchfield" type="text" name="linkType"></td><td colspan="2"><input type=submit name="linkAddSubmit" value="Add New Link"></td></tr>
+        	</table>
+		<br>
+        	</form>
+
+        </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

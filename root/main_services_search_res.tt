@@ -30,7 +30,7 @@
 					[% END %]
 				[% END %]
 				<tr>
-		 	 		<th align="left" bgcolor="eeeeee" colspan=4>Link Description - [% link.link_description %]</th>
+		 	 		<th align="left" colspan=4 width="400">Link Description - [% link.link_description %]</th>
 				</tr>
 				<tr>
 		 	 		<td><font color="cccccc">Point A Site ID</font><td colspan=4><a href="/site/[% link.pointa_siteid.site_id %]">[% siteAname %]</a></td>
