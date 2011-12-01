@@ -1,4 +1,11 @@
-        [% INCLUDE static/moss_header.tt %]
+[% INCLUDE static/moss_header.tt %]
+		[% FOREACH site IN siteSearchResults %]
+		[% gps_coords = site.gps_coords.split(',') %]
+		[% gps_a = gps_coords.0 %]
+		[% gps_b = gps_coords.1 %]
+		[% END %]
+<body onload="initialize('[% gps_a %]','[% gps_b %]')">
+[% INCLUDE static/moss_logout.tt %]
 
 	<div id="prec">
         <div id="wrap">
@@ -27,10 +34,18 @@
         	<tr align="left"><th>Site Type</th><td>[% site.site_type %]<l/td><td colspan="2"></td></tr>
         	<tr align="left"><th>GPS Co-ordinates</th><td colspan="3" width="400">[% site.gps_coords %]</td></tr>
         	<tr align="left"><th>Site Owner</th><td colspan="3">[% site.site_owner %]</td></tr>
+        	[% IF site.site_dependency.site_name == "None" %]
+        	<tr align="left"><th>Site Dependency</th><td colspan="3">[% site.site_dependency.site_name %]</td></td>
+        	[% ELSE %]
+        	<tr align="left"><th>Site Dependency</th><td colspan="3"><a href="/site/[% site.site_dependency.site_id %]">[% site.site_dependency.site_name %]</a></td></tr>
+        	[% END %]
         	</table>
         	</form>
 		<br>
 		<br>
+		<div id="map_canvas" style="width:550px; height:300px"></div>
+		<br><br>
+		
 		<a href="/site/[% site.site_id %]/edit">Edit Site Details</a>
 		[% END %]
 

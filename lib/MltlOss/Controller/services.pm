@@ -87,6 +87,63 @@ sub view : Chained('base') : PathPart('') Args(1) {
 
 sub mod : Chained('base') : PathPart('') CaptureArgs(1) { }
 
+sub editservice : Chained('mod') :PathPart('edit') Args(0) {
+	my ($self, $c) = @_;
+	my $log = $c->log;
+	
+	# Grab URI
+	my $url = $c->req->uri;
+	
+	# Split URI to get the custID
+	my @elements = split('/',$url);
+	my $service_id = $elements[4];
+	
+	# Check if user is logged in
+	if ($c->session->{logged_in}) {
+		$c->stash->{username} = $c->session->{username};
+		
+		# Check if form is submitted
+		if ($c->req->method eq "POST") {
+			
+			# Find Row in table.
+			my $rs = $c->model('MltlDB::EnterpriseService')->search( { service_id => $service_id } );
+			
+			# Update the table with the form elements
+			$rs->update( {
+				customer_id => $c->req->param("custID"),
+				service_description => $c->req->param("serviceDescription"),
+				point_a => $c->req->param("pointA"),
+				point_b => $c->req->param("pointB")
+			} );
+				
+				# Redirect to the service view
+				$c->response->redirect("/service/$service_id");		
+		
+		} else {
+		
+		# Get all customers from DB - 
+				$c->stash(customerResults => [$c->model('MltlDB::MltlCustomer')->search( { 
+					cust_id => { like => '%' } } )
+				]);
+				
+		# Get all the services from DB
+		$c->stash(serviceResults => [$c->model('MltlDB::EnterpriseService')->search( { service_id => $service_id } )]);
+				
+		# Display the edit form.
+		$c->stash(template => 'moss_serviceModify.tt');
+		$c->forward('MltlOss::View::MltlOss');		
+		
+		}
+		
+	} else {
+		my $url = $c->req->uri	;
+		$log->info("Test: Referer : $url)");
+		$c->stash->{url} = $url;
+		$c->stash(template => "static/moss_login.tt");
+		$c->forward('MltlOss::View::MltlOss');	
+	}
+}
+
 sub addlink : Chained('mod') :PathPart('addlink') Args(0) {
 	my ($self, $c, $serviceid) = @_;
 	my $log = $c->log;
@@ -106,7 +163,7 @@ sub addlink : Chained('mod') :PathPart('addlink') Args(0) {
 					
 					# Form Submitted
 					# The details submitted here need to be entered into the 
-					# intermidary table
+					# intermediary table
 					
 					$c->model('MltlDB::ServicesInterm')->create( {
 						service_id => $service_id,

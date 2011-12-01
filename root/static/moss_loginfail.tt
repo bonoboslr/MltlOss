@@ -12,7 +12,7 @@
 					[% END %]
                                         <table>
                                         <tr>
-                                         <th>Username<th><input type=text name="username"></th><td></td>
+                                         <th>Username<th><input type=text name="username"></th><td>LOGIN FAILED</td>
                                         </tr>
                                         <tr>
                                          <th>Password<th><input type=password name="password"></th> <td><input type=submit value="Login to MOSS"></td>

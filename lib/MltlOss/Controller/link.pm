@@ -111,7 +111,7 @@ sub edit : Chained("mod") :PathPart("edit") Args(0) {
 			} else {
 				# Display the FORM
 				
-				# Pull out user info from the DB
+				# Pull out link info from the DB
 				$c->stash(linkSearchResults => [$c->model('MltlDB::Link')->search( { link_id =>  $link_id })]);
 				
 				# Search for ALL the sites.
@@ -125,6 +125,11 @@ sub edit : Chained("mod") :PathPart("edit") Args(0) {
 				
 			}
 		} else {
+			my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 			# Redirect to Login Page
 			$c->response->redirect('/');
 	
@@ -175,10 +180,11 @@ sub insert :Chained("linkbase") :PathPart("add") Args(0) {
 	
 	} else {
 		
-		# Redirect to Login Page
-		$log->info("Test: Referer : $c->req->headers->referer");
-		$c->stash->{url} = $c->req->headers->referer;
-		$c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 
 	}	
 }

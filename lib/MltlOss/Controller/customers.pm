@@ -36,8 +36,11 @@ sub root :Chained("base") : PathPart("") Args(0) {
     		$c->stash(template => 'moss_customer.tt');
     		$c->forward('MltlOss::View::MltlOss');
 	} else {
-		# Redirect to Login
-                $c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
         }
 
 }
@@ -78,8 +81,11 @@ sub insert :Chained("base") : PathPart("add") Args(0) {
 		}
 
 	} else {
-		# Redirect to Login
-		$c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 	}
 }
 
@@ -133,8 +139,11 @@ sub search_form :Chained("base") : PathPart("search") Args(0) {
                 		$c->forward('end');
         	}
 	} else {
-		# Redirect to Login
-               	$c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 	}
 }
 
@@ -156,8 +165,11 @@ sub view :Chained('base') :PathPart('') Args(1) {
     		$c->stash(template => 'moss_customer_search_res.tt');
     		$c->forward('MltlOss::View::MltlOss');
 	} else {
-		# Redirect to Login
-               	$c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 	}
 
 }
@@ -201,8 +213,11 @@ sub addcomment : PathPart('addcomment') Chained('mod') Args(0) {
 		}
 
 	} else {
-		# Redirect to Login
-               	$c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 
 	}
 
@@ -265,8 +280,11 @@ sub addservice : PathPart('addservice') Chained('mod') Args(0) {
 			$c->forward('MltlOss::View::MltlOss');
 		}
 	} else {
-		# Redirect to Login
-		$c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 	}
 }
 
@@ -310,8 +328,11 @@ sub edit : PathPart('edit') Chained('mod') Args(0) {
                         $c->forward('MltlOss::View::MltlOss');
 		}
 	} else {
-		# Redirect to Login
-                $c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 	}
 }
 

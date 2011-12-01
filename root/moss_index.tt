@@ -1,5 +1,7 @@
 [% IF logged_in == "1" %]
         [% INCLUDE static/moss_header.tt %]
+<body>
+[% INCLUDE static/moss_logout.tt %]
 
 	<div id="prec">
         <div id="wrap">

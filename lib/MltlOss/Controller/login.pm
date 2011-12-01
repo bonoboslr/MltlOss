@@ -41,13 +41,10 @@ sub root :Chained("base") : PathPart("") Args(0) {
                         } else {
                         	$c->response->redirect("$url");
                         }
-                        #$c->stash(template => 'moss_index.tt');
-                        #$c->forward('MltlOss::View::MltlOss');
                       
                 } else {
-                    	$log->info("VERY WEIRD");
                         $c->stash->{logged_in} = 0;
-                        $c->stash(template => 'moss_index.tt');
+                        $c->stash(template => 'static/moss_loginfail.tt');
                         $c->forward('MltlOss::View::MltlOss');
                 }
 

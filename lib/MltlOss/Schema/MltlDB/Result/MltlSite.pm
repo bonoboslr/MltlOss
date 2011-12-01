@@ -46,6 +46,7 @@ __PACKAGE__->table("mltl_sites");
 
   data_type: INT
   default_value: undef
+  is_foreign_key: 1
   is_nullable: 1
   size: 11
 
@@ -96,7 +97,13 @@ __PACKAGE__->add_columns(
     size => 45,
   },
   "site_dependency",
-  { data_type => "INT", default_value => undef, is_nullable => 1, size => 11 },
+  {
+    data_type => "INT",
+    default_value => undef,
+    is_foreign_key => 1,
+    is_nullable => 1,
+    size => 11,
+  },
   "site_type",
   {
     data_type => "VARCHAR",
@@ -152,6 +159,35 @@ __PACKAGE__->has_many(
   { "foreign.pointb_siteid" => "self.site_id" },
 );
 
+=head2 site_dependency
+
+Type: belongs_to
+
+Related object: L<MltlOss::Schema::MltlDB::Result::MltlSite>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "site_dependency",
+  "MltlOss::Schema::MltlDB::Result::MltlSite",
+  { site_id => "site_dependency" },
+  { join_type => "LEFT" },
+);
+
+=head2 mltl_sites
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::MltlSite>
+
+=cut
+
+__PACKAGE__->has_many(
+  "mltl_sites",
+  "MltlOss::Schema::MltlDB::Result::MltlSite",
+  { "foreign.site_dependency" => "self.site_id" },
+);
+
 =head2 services_interms
 
 Type: has_many
@@ -167,8 +203,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-30 11:55:53
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cb6LeAA+Mep5scy1jk8aKQ
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-12-01 13:26:32
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WQ46NCYcCJWcYOzOZpCkCA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

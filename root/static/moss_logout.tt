@@ -1,0 +1,9 @@
+<div class="content">
+	<div id="top">
+		<div id="icons">
+		<a href="/logout" title="Log Out"><img src="/static/images/logout1.gif" alt="Logout" /></a>
+		</div>
+		<h1>MOSS</h1>
+		<h2>Multlinks OSS</h2>
+	</div>
+</div>

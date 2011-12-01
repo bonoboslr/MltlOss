@@ -2,7 +2,7 @@
                                         <h2><a href="/">HOME</a>&rarr;<a href="/customers/">CUSTOMER MANAGEMENT</a></h2>
                                         <form name="custSearch1" method="POST" action="/customers/search">
                                         <input size=35 class="searchfield" type=text name="searchBox" value="Search Name,Email,Phone or ID..." onfocus="if (this.value == 'Search Name,Email,Phone or ID...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search Name,Email,Phone or ID...';}">
-                                        <input class="searchbutton" type="submit" value="Go"><br><br>
+                                        <input class="searchbutton" type="submit" value="Search For Customer"><br><br>
                                         <a href="/customers/add">Add New Customer Details</a>
                                         </form>
                                 </div>

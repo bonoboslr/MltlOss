@@ -1,0 +1,65 @@
+        [% INCLUDE static/moss_header.tt %]
+        <body>
+[% INCLUDE static/moss_logout.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_customer_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Modify Service Details</div>
+		[% FOREACH service IN serviceResults %]
+		[% serviceid = service.service_id %]
+        	<form name="serviceModify" method="POST" action="/service/[% serviceid %]/edit" class="searchform">
+        	<table border="0">
+        	<tr align="left">
+        	<th>Service Description</th>
+        	<td><input type="text" class="searchfield1" name="serviceDescription" value="[% service.service_description %]"</td>
+        	</tr>
+        	<tr align="left">
+        	<th width="125">Point A Location</th>
+        	<td><input type="text" class="searchfield" name="pointA" value="[% service.point_a %]"></td>
+        	</tr>
+        	</tr>
+        	<tr align="left">
+        	<th width="125">Point B Location</th>
+        	<td><input type="text" class="searchfield" name="pointB" value="[% service.point_b %]"></td>
+        	</tr>
+        	
+        	<tr align="left">
+        	<th width="125">Customer</th>
+        	<td><select class="searchfield" name="custID">
+        	[% FOREACH customer IN customerResults %]
+        		[% IF customer.cust_id == service.customer_id %]
+        			<option selected="selected" value="[% customer.cust_id %]">[% customer.cust_name %]</option>
+        		[% ELSE %]
+        			<option value="[% customer.cust_id %]">[% customer.cust_name %]</option>
+        		[% END %]
+        	[% END %]
+        	</select>
+        	</td>
+        	</table>
+		<input type="submit" name="modifyCustomer" value="Click to Modify">
+		<br>
+		<br>
+        	</form>
+		<br>
+		<br>
+		[% END %]
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

@@ -1,0 +1,82 @@
+        [% INCLUDE static/moss_header.tt %]
+        <body>
+[% INCLUDE static/moss_logout.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_customer_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+		
+		[% INCLUDE moss_customer_rightMenu.tt %]
+
+                <div id="left_side">
+		<div class="date">Modify Site Details</div>
+		[% FOREACH site IN siteSearchResults %]
+		[% siteid = site.site_id %]
+        	<form name="custSearch1" method="POST" action="/site/[% siteid %]/edit" class="searchform">
+        	<table border="0">
+        	<tr align="left">
+        	<th>Site Name</th>
+        	<td><input type="text" class="searchfield1" name="siteName" value="[% site.site_name %]"</td>
+        	</tr>
+
+        	<tr align="left">
+        	<th>GPS Coordinates (N,E)</th>
+        	<td><input type="text" class="searchfield" name="gpsCoords" value="[% site.gps_coords %]"></td>
+        	</tr>
+        	
+        	</tr>
+        	<tr align="left">
+        	<th>Site Type (Node/Hub)</th>
+        	<td><input type="text" class="searchfield" name="siteType" value="[% site.site_type %]"></td>
+        	</tr>
+        	
+        	</tr>
+        	<tr align="left">
+        	<th>Site Owner</th>
+        	<td><input type="text" class="searchfield" name="siteOwner" value="[% site.site_owner %]"></td>
+        	</tr>
+        	
+        	</tr>
+        	<tr align="left">
+        	<th>Site Reference</th>
+        	<td><input type="text" class="searchfield" name="siteReference" value="[% site.site_reference %]"></td>
+        	</tr>
+
+        	<tr align="left">
+        	<th>Site Dependency</th>
+					<td><select class="searchfield" name="siteDependency">
+					<option value="13">NONE</option>
+        	[% FOREACH depsite IN allSites %]
+        		[% IF depsite.site_id == site.site_dependency.site_id %]
+        			<option selected="selected" value="[% depsite.site_id %]">[% depsite.site_name %]</option>
+        		[% ELSE %]
+        			<option selected="none" value="[% depsite.site_id %]">[% depsite.site_name %]</option>
+        		[% END %]
+        	[% END %]
+        	</select>
+        	</td>       	
+        	
+        	</tr>
+        	</table>
+		<input type="submit" name="modifySite" value="Click to Modify">
+		<br>
+		<br>
+        	</form>
+		<br>
+		<br>
+		[% END %]
+
+                </div>
+
+        </div>
+	[% INCLUDE static/moss_footer.tt %]

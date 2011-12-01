@@ -37,7 +37,11 @@ sub root : Chained("base") : PathPart("") : Args(0) {
                 $c->forward('MltlOss::View::MltlOss');
         } else {
                 # Redirect to Login
-                $c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
         }
 }
 
@@ -46,15 +50,15 @@ sub view :Chained('base') :PathPart('') Args(1) {
         my ($self, $c, $site_id) = @_;
         my $log = $c->log;
         if ($c->session->{logged_in}) {
-                my $user = $c->session->{username};
-                $c->stash->{username} = $user;
+            my $user = $c->session->{username};
+            $c->stash->{username} = $user;
 		        $c->stash(siteSearchResults => [$c->model('MltlDB::MltlSite')->search( {
-                        site_id =>  $site_id })]);
-                $c->stash(siteComments => [$c->model('MltlDB::SiteComment')->search( {
-                        site_id => $site_id })]);
+            	site_id =>  $site_id })]);
+            $c->stash(siteComments => [$c->model('MltlDB::SiteComment')->search( {
+            	site_id => $site_id })]);
 
-                # Search for Links Associated with the site
-                $c->stash(linksearchResults => [$c->model('MltlDB::Link')->search( {
+            # Search for Links Associated with the site
+            $c->stash(linksearchResults => [$c->model('MltlDB::Link')->search( {
                             -or => [    pointa_siteid => $site_id,
                                         pointb_siteid => $site_id,
                                         ]
@@ -65,7 +69,11 @@ sub view :Chained('base') :PathPart('') Args(1) {
                 $c->forward('MltlOss::View::MltlOss');
         } else {
                 # Redirect to Login
-                $c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
         }
 
 }
@@ -102,7 +110,11 @@ sub insert :Chained("base") :PathPart("add") Args(0) {
 		}
 	} else {
                 # Redirect to Login
-                $c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 	}
 }
 
@@ -112,6 +124,66 @@ sub insert :Chained("base") :PathPart("add") Args(0) {
 #   siteComments table
 
 sub mod : Chained("base") :PathPart('') :CaptureArgs(1) {}
+
+sub editsite : Chained('mod') :PathPart('edit') Args(0) {
+    my ($self, $c) = @_;
+    my $log = $c->log;
+
+    if ($c->session->{logged_in}) {
+        # Send user details to the stash
+        my $user = $c->session->{username};
+        $c->stash->{username} = $user;
+
+        # Grab URI
+        my $url = $c->req->uri;
+        # Split the URI to get the siteID
+        my @elements = split('/',$url);
+        my $site_id = $elements[4];
+        
+        if ($c->req->method eq 'POST') {
+
+      	my $rs = $c->model('MltlDB::MltlSite')->search( { site_id => $site_id });
+      	
+				$rs->update( {
+					site_reference	=> $c->req->param("siteReference"),
+        	gps_coords	=> $c->req->param("gpsCoords"),
+        	site_dependency	=> $c->req->param("siteDependency"),
+        	site_type => $c->req->param("siteType"),
+        	site_owner => $c->req->param("siteOwner"),
+        	site_reference => $c->req->param("siteReference"),
+        	site_name => $c->req->param("siteName")
+        });
+       
+				# Redirect to the customer view
+				$c->response->redirect("/site/$site_id");        	
+        	
+        } else {
+        	
+ 				# Pull out site info from the DB
+				$c->stash(siteSearchResults => [$c->model('MltlDB::MltlSite')->search( { site_id =>  $site_id })]);
+				
+				# Search for ALL the sites.
+				$c->stash(allSites => [$c->model('MltlDB::MltlSite')->search( { 
+					site_id => { like => '%' } } )]);
+        	
+        	# Serve the Site Update Form
+				
+					# Send to the view
+          $c->stash(template => 'moss_siteModify.tt');
+          $c->forward('MltlOss::View::MltlOss');        
+       
+        }
+        
+ 		} else {
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');			
+ 			
+ 		}
+	
+}
 
 sub addsitecomment : Chained('mod') :PathPart('addcomment') Args(0) {
     my ($self, $c) = @_;
@@ -145,7 +217,11 @@ sub addsitecomment : Chained('mod') :PathPart('addcomment') Args(0) {
         }
     } else {
         # Redirect to Login
-        $c->response->redirect('/');
+  		my $url = $c->req->uri	;
+			$log->info("Test: Referer : $url)");
+			$c->stash->{url} = $url;
+			$c->stash(template => "static/moss_login.tt");
+			$c->forward('MltlOss::View::MltlOss');
 
     }
 }
