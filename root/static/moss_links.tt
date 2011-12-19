@@ -4,4 +4,8 @@
                                                         <li><a href="/service" title="Enterprise Services">ENTERPRISE SERVICES</a></li>
                                                         <li><a href="/site" title="Site Management">SITE MANAGEMENT</a></li>
                                                         <li><a href="#" title="Articles">TICKETS</a></li>
+                                                        [% IF role == "admin" %]
+                                                        <li><a href="/admin" title="Admin">ADMIN TOOLS</a></li>
+                                                        [% ELSE %]
+                                                        [% END %]
                                                 </ul>

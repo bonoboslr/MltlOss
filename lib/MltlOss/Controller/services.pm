@@ -30,7 +30,14 @@ sub root : Chained("base") : PathPart("") : Args(0) {
         my $log = $c->log;
         if ($c->session->{logged_in}) {
                 my $user = $c->session->{username};
-                $c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
                 $c->stash(template => 'moss_service.tt');
                 $c->forward('MltlOss::View::MltlOss');
         } else {
@@ -100,7 +107,15 @@ sub editservice : Chained('mod') :PathPart('edit') Args(0) {
 	
 	# Check if user is logged in
 	if ($c->session->{logged_in}) {
-		$c->stash->{username} = $c->session->{username};
+		my $user = $c->session->{username};
+		        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 		
 		# Check if form is submitted
 		if ($c->req->method eq "POST") {
@@ -157,7 +172,15 @@ sub addlink : Chained('mod') :PathPart('addlink') Args(0) {
 	
 		# Check if user is logged in
 		if ($c->session->{logged_in}) {
-			$c->stash->{username} = $c->session->{username};
+		my $user = $c->session->{username};
+		        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 			
 				if ($c->req->method eq "POST") {
 					

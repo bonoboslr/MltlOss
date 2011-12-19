@@ -1,0 +1,4 @@
+                                <div id="slogan">
+                                        <h2><a href="/admin">ADMIN DASHBOARD</a></h2>
+                                        <a href="/admin/users">User Management</a>
+                                </div>

@@ -1,5 +1,8 @@
                                 <div id="slogan">
                                         <h2><a href="/">HOME</a>&rarr;<a href="/site/">SITE MANAGEMENT</a></h2>
+                                        <form name="siteSearch1" method="POST" action="/site/search">
+                                        <input size=35 class="searchfield" type=text name="searchBox" value="Search Site Reference or SiteID..." onfocus="if (this.value == 'Search Site Reference or SiteID...') {this.value = '';}" onblur="if (this.value == '') {this.value = 'Search Site Reference or SiteID...';}">
+                                        <input class="searchbutton" type="submit" value="Search For Site"><br><br>
 					<a href="/site/add">Add A New Site</a>
 					<br>
 					<br>

@@ -31,10 +31,17 @@ sub index :Path :Args(0) {
 	my $log = $c->log;
 
 	if ($c->session->{logged_in}) {
-		my $user = $c->session->{username};
-		$c->stash->{username} = $user;
+  	my $user = $c->session->{username};
+          
+    # Get User's ROLE
+    my $rs = $c->model("MltlDB::User")->single( {
+    	username => $user
+    });
+    my $role = $rs->role;
+          
+    $c->stash->{username} = $user;
+    $c->stash->{role} = $role;
 		$c->stash->{logged_in} = 1;
-		$c->stash->{page} = 'start';
                 $log->info("Connect to Database and get userid");
 		$c->stash(template => 'moss_index.tt');
                 $c->forward('MltlOss::View::MltlOss');
@@ -59,10 +66,45 @@ Standard 404 error page
 
 =cut
 
-sub default :Path {
+# match /
+sub base :Chained("/") : PathPart("") : CaptureArgs(0) { }
+
+# match / (end of chain)
+sub root : Chained("base") : PathPart("") : Args(0) {
     my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
+}
+
+# match /admin
+sub adminbase :Chained("/") :PathPart("admin") :CaptureArgs(0) { }
+
+# match /admin (end of chain)
+sub adminroot :Chained("adminbase") :PathPart('') Args(0) {
+		my ( $self, $c ) = @_;
+	my $log = $c->log;
+	if ($c->session->{logged_in}) {
+  	my $user = $c->session->{username};
+          
+    # Get User's ROLE
+    my $rs = $c->model("MltlDB::User")->single( {
+    	username => $user
+    });
+    my $role = $rs->role;
+          
+    $c->stash->{username} = $user;
+    $c->stash->{role} = $role;
+	  $c->stash(template => 'moss_admin.tt');
+    $c->forward('MltlOss::View::MltlOss');
+    
+	} else {
+		# Redirect to Login
+  	my $url = $c->req->uri	;
+		$log->info("Test: Referer : $url)");
+		$c->stash->{url} = $url;
+		$c->stash(template => "static/moss_login.tt");
+		$c->forward('MltlOss::View::MltlOss');
+	}
 }
 
 =head2 end

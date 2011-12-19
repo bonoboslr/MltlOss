@@ -1,4 +1,4 @@
-package MltlOss::Schema::MltlDB::Result::Group;
+package MltlOss::Schema::MltlDB::Result::TicketStatus;
 
 # Created by DBIx::Class::Schema::Loader
 # DO NOT MODIFY THE FIRST PART OF THIS FILE
@@ -12,15 +12,15 @@ __PACKAGE__->load_components("InflateColumn::DateTime");
 
 =head1 NAME
 
-MltlOss::Schema::MltlDB::Result::Group
+MltlOss::Schema::MltlDB::Result::TicketStatus
 
 =cut
 
-__PACKAGE__->table("groups");
+__PACKAGE__->table("ticket_status");
 
 =head1 ACCESSORS
 
-=head2 group_id
+=head2 ticketstatus_id
 
   data_type: INT
   default_value: undef
@@ -28,14 +28,14 @@ __PACKAGE__->table("groups");
   is_nullable: 0
   size: 11
 
-=head2 group_name
+=head2 name
 
   data_type: VARCHAR
   default_value: undef
   is_nullable: 1
-  size: 45
+  size: 50
 
-=head2 group_description
+=head2 description
 
   data_type: VARCHAR
   default_value: undef
@@ -45,7 +45,7 @@ __PACKAGE__->table("groups");
 =cut
 
 __PACKAGE__->add_columns(
-  "group_id",
+  "ticketstatus_id",
   {
     data_type => "INT",
     default_value => undef,
@@ -53,14 +53,14 @@ __PACKAGE__->add_columns(
     is_nullable => 0,
     size => 11,
   },
-  "group_name",
+  "name",
   {
     data_type => "VARCHAR",
     default_value => undef,
     is_nullable => 1,
-    size => 45,
+    size => 50,
   },
-  "group_description",
+  "description",
   {
     data_type => "VARCHAR",
     default_value => undef,
@@ -68,7 +68,7 @@ __PACKAGE__->add_columns(
     size => 150,
   },
 );
-__PACKAGE__->set_primary_key("group_id");
+__PACKAGE__->set_primary_key("ticketstatus_id");
 
 =head1 RELATIONS
 
@@ -83,26 +83,12 @@ Related object: L<MltlOss::Schema::MltlDB::Result::Ticket>
 __PACKAGE__->has_many(
   "tickets",
   "MltlOss::Schema::MltlDB::Result::Ticket",
-  { "foreign.group" => "self.group_id" },
-);
-
-=head2 user_groups
-
-Type: has_many
-
-Related object: L<MltlOss::Schema::MltlDB::Result::UserGroup>
-
-=cut
-
-__PACKAGE__->has_many(
-  "user_groups",
-  "MltlOss::Schema::MltlDB::Result::UserGroup",
-  { "foreign.group_id" => "self.group_id" },
+  { "foreign.status" => "self.ticketstatus_id" },
 );
 
 
 # Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-12-06 15:15:41
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XRg4VQqc12DMPIuB8OPAQg
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9qYuKNhFMFhl1O8T1JTCUA
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration

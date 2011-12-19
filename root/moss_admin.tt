@@ -6,10 +6,8 @@
         <div id="wrap">
                         <div id="pic">
                                 <div id="slogan">
-                                        <h2><a href="/">HOME</a></h2>
-                                        <h2>
-					Welcome to the MOSS platform. 
-                                        </h2>
+                                        <h2><a href="/admin">ADMIN DASHBOARD</a></h2>
+					<a href="/admin/users">User Management</a>
                                 </div>
                         </div>
                         <div id="menu">

@@ -47,7 +47,13 @@
 		<tr align="left"><th>Link Speed</th><td><input class="searchfield" type=text size="30" name="linkSpeed"></td>
 		                 <th width="75">Owner</th><td><input type="textbox" class="searchfield" size="150" name="linkOwner"></td></tr>
 		<tr align="left"><th>Link Contact</th><td><input type="textbox" name="linkContact" class="searchfield"></td><th>Contact Phone</th><td><input type="textbox" name="contactPhone" class="searchfield"></td></tr>
-		<tr align="left"><th>Link Type</th><td><input class="searchfield" type="text" name="linkType"></td><td colspan="2"><input type=submit name="linkAddSubmit" value="Add New Link"></td></tr>
+		<tr align="left"><th>Link Type</th>
+		<td><select name="linkType" class="searchfield">
+				<option value="SDH">Fibre (SDH)</option>
+				<option value="Microwave">Microwave</option>
+				</select>
+		</td>
+		<td colspan="2"><input type=submit name="linkAddSubmit" value="Add New Link"></td></tr>
         	</table>
 		<br>
         	</form>

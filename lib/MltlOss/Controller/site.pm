@@ -31,10 +31,18 @@ sub root : Chained("base") : PathPart("") : Args(0) {
         my $log = $c->log;
 	$log->info("TEST");
         if ($c->session->{logged_in}) {
-                my $user = $c->session->{username};
-                $c->stash->{username} = $user;
+          my $user = $c->session->{username};
+          
+          # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 	        $c->stash(template => 'moss_sites.tt');
-                $c->forward('MltlOss::View::MltlOss');
+          $c->forward('MltlOss::View::MltlOss');
         } else {
                 # Redirect to Login
   		my $url = $c->req->uri	;
@@ -45,13 +53,62 @@ sub root : Chained("base") : PathPart("") : Args(0) {
         }
 }
 
+sub search_form :Chained("base") : PathPart("search") Args(0) {
+	my ($self, $c, $id) = @_;
+	my $cust_id;
+	my $siteID;
+	my $log = $c->log;
+	my $method = $c->req->method;
+  	if ($c->session->{logged_in}) {
+    	my $user = $c->session->{username};
+       
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
+          
+			if ($c->req->method eq 'POST') {
+				# Form Submitted
+				my $rs = $c->model('MltlDB::MltlSite')->single( {
+      		-or => 	[ site_reference => { like => $c->req->param("searchBox") }, 
+      			  site_id	 => { like => $c->req->param("searchBox") },
+									] });
+				
+				if ($rs != '') {					
+				$c->stash->{siteSearchResults} = $rs;
+				
+				# Pull out any siteID
+				$siteID = $rs->site_id;
+				}
+
+				# Redirect to siteID result
+				$c->response->redirect("/site/$siteID");
+			}
+	
+		} else {
+		}
+}
+
 # Match URL /site/*
 sub view :Chained('base') :PathPart('') Args(1) {
         my ($self, $c, $site_id) = @_;
         my $log = $c->log;
         if ($c->session->{logged_in}) {
             my $user = $c->session->{username};
-            $c->stash->{username} = $user;
+            
+         # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
+          
 		        $c->stash(siteSearchResults => [$c->model('MltlDB::MltlSite')->search( {
             	site_id =>  $site_id })]);
             $c->stash(siteComments => [$c->model('MltlDB::SiteComment')->search( {
@@ -86,7 +143,14 @@ sub insert :Chained("base") :PathPart("add") Args(0) {
         if ($c->session->{logged_in}) {
                 # Send user details to the stash
                 my $user = $c->session->{username}; 
-                $c->stash->{username} = $user; 
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 
                 # Check if form submitted 
                 if ($c->req->method eq 'POST') {
@@ -132,7 +196,14 @@ sub editsite : Chained('mod') :PathPart('edit') Args(0) {
     if ($c->session->{logged_in}) {
         # Send user details to the stash
         my $user = $c->session->{username};
-        $c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 
         # Grab URI
         my $url = $c->req->uri;
@@ -192,7 +263,14 @@ sub addsitecomment : Chained('mod') :PathPart('addcomment') Args(0) {
     if ($c->session->{logged_in}) {
         # Send user details to the stash
         my $user = $c->session->{username};
-        $c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 
         # Grab URI
         my $url = $c->req->uri;
@@ -225,6 +303,7 @@ sub addsitecomment : Chained('mod') :PathPart('addcomment') Args(0) {
 
     }
 }
+
 
 =head1 AUTHOR
 

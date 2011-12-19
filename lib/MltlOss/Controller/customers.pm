@@ -32,7 +32,14 @@ sub root :Chained("base") : PathPart("") Args(0) {
         if ($c->session->{logged_in}) {
         	my $user = $c->session->{username};
 		$log->info("Username = $user");
-       	 	$c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
     		$c->stash(template => 'moss_customer.tt');
     		$c->forward('MltlOss::View::MltlOss');
 	} else {
@@ -54,7 +61,14 @@ sub insert :Chained("base") : PathPart("add") Args(0) {
 	if ($c->session->{logged_in}) {
 		# Send user details to the stash
 		my $user = $c->session->{username};
-                $c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 
 		# Check if form submitted
 		if ($c->req->method eq 'POST') {
@@ -98,35 +112,48 @@ sub search_form :Chained("base") : PathPart("search") Args(0) {
 	my $method = $c->req->method;
         if ($c->session->{logged_in}) {
         	my $user = $c->session->{username};
-       	 	$c->stash->{username} = $user;
+         # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 
 		if ($c->req->method eq 'POST') {
 			# Form Submitted
 			#my $searchcriteria = $c->req->param("searchOption");
                         #	if ($searchcriteria eq 'email') {
-                                	$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( {
-                                                	-or => 	[ 	email_add1 =>  	$c->req->param("searchBox"), 
-									email_add2 => 	$c->req->param("searchBox"),
-									phone1 =>  $c->req->param("searchBox"),
-									phone2 =>  $c->req->param("searchBox"),
-									cust_name =>  $c->req->param("searchBox"),
-									cust_id=>  $c->req->param("searchBox"),
-								] })]);  
+                                	#$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( {
+                                        #        	-or => 	[ 	email_add1 =>  	$c->req->param("searchBox"), 
+					#				email_add2 => 	$c->req->param("searchBox"),
+					#				phone1 =>  $c->req->param("searchBox"),
+					#				phone2 =>  $c->req->param("searchBox"),
+					#				cust_name =>  $c->req->param("searchBox"),
+					#				cust_id=>  $c->req->param("searchBox"),
+					#			] })]);  
 
 					my $rs = $c->model('MltlDB::MltlCustomer')->single( ( {
                                                         -or =>  [       email_add1 =>   $c->req->param("searchBox"),
                                                                         email_add2 =>   $c->req->param("searchBox"),
                                                                         phone1 =>  $c->req->param("searchBox"),
                                                                         phone2 =>  $c->req->param("searchBox"),
-                                                                        cust_name =>  $c->req->param("searchBox"),
+                                                                        cust_name =>  { like => $c->req->param("searchBox") },
                                                                         cust_id=>  $c->req->param("searchBox"),
 								] }));
-					my $custid = $rs->cust_id;
-					$log->info("Custid $custid ");
+
+					if ($rs != '') { 
+						$cust_id = $rs->cust_id; 
+						@{$c->stash->{custSearchResults}} = $rs;
+						
+					}
+
+					$log->info("Custid $cust_id ");
                                         $c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
-                                                        customer_id => $custid })]);
+                                                        customer_id => $cust_id })]);
 					$c->stash(customerComments => [$c->model('MltlDB::CustomerComment')->search( {
-							customer_id => $custid })]);
+							customer_id => $cust_id })]);
 					
 
 				# send results to the view
@@ -154,7 +181,14 @@ sub view :Chained('base') :PathPart('') Args(1) {
 	my $log = $c->log;
         if ($c->session->{logged_in}) {
         	my $user = $c->session->{username};
-       	 	$c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 		$c->stash(custSearchResults => [$c->model('MltlDB::MltlCustomer')->search( {
                                                         cust_id =>  $cust_id })]);
 		$c->stash(custServiceResults => [$c->model('MltlDB::EnterpriseService')->search( {
@@ -191,7 +225,14 @@ sub addcomment : PathPart('addcomment') Chained('mod') Args(0) {
 
         if ($c->session->{logged_in}) {
                 my $user = $c->session->{username};
-                $c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 
 		# Get USERID from DB
 		my $rs = $c->model('MltlDB::User')->single( ({
@@ -237,7 +278,15 @@ sub addservice : PathPart('addservice') Chained('mod') Args(0) {
 	
 	# Check if user is logged in
 	if ($c->session->{logged_in}) {
-		$c->stash->{username} = $c->session->{username};
+		my $user = $c->session->{username};
+		        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 		
 		# Check if the form has been submitted
 		if ($c->req->method eq 'POST') {
@@ -302,7 +351,14 @@ sub edit : PathPart('edit') Chained('mod') Args(0) {
 
         if ($c->session->{logged_in}) {
                 my $user = $c->session->{username};
-                $c->stash->{username} = $user;
+        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 		$log->info("Customer ID is $cust_id");
 
 		if ($c->req->method eq 'POST') {

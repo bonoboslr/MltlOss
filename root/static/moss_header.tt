@@ -36,7 +36,7 @@
 				var companyImage = new google.maps.MarkerImage('/static/images/tower.png',
 					new google.maps.Size(30,30),
 					new google.maps.Point(0,0),
-					new google.maps.Point(15,15)
+					new google.maps.Point(10,30)
 				);
 
 				var companyShadow = new google.maps.MarkerImage('images/logo_shadow.png',

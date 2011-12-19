@@ -31,6 +31,15 @@ sub view :	Chained("linkbase") : PathPart("") Args(1) {
 	my $log = $c->log;
 	
 	if ($c->session->{logged_in}) {
+				my $user = $c->session->{username};
+		        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 	
 		# Search for links in the DB
 		my $rs = $c->model("MltlDB::Link")->search( {
@@ -87,7 +96,15 @@ sub edit : Chained("mod") :PathPart("edit") Args(0) {
 	
 	# Check if user is logged in
 	if ($c->session->{logged_in}) {
-		$c->stash->{username} = $c->session->{username};
+		my $user = $c->session->{username};
+		        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 		
 		# Check if the form has been submitted
 		if ($c->req->method eq 'POST') {
@@ -143,7 +160,15 @@ sub insert :Chained("linkbase") :PathPart("add") Args(0) {
 
 	if ($c->session->{logged_in}) {
 		# Send User details to the stashh
-		$c->stash->{username} = $c->session->{username};
+		my $user = $c->session->{username};
+		        # Get User's ROLE
+          my $rs = $c->model("MltlDB::User")->single( {
+          	username => $user
+          });
+          my $role = $rs->role;
+          
+          $c->stash->{username} = $user;
+          $c->stash->{role} = $role;
 		
 		# Check if form has been submitted
 		if ($c->req->method eq "POST") {

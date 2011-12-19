@@ -36,6 +36,52 @@ sub root :Chained("base") : PathPart("") Args(0) {
                         $c->session->{username} = $c->req->param("username");
                         $c->stash->{logged_in} = 1;
                         $c->session->{logged_in} = 1;
+
+                        # Check if user is in Users Table - if not add them.
+												my $rs = $c->model("MltlDB::User")->single( {
+													username => $c->req->param("username")
+												});
+												
+												my $username = $c->req->param("username");
+    										$c->stash->{username} = $username;
+												
+											if ($rs == '') {
+											# user is not in DB - add them.
+											# First find all details from LDAP
+											my $mesg = $c->model('People')->search("(uid=$username)");
+    											my @entries = $mesg->entries;
+    											my $fullname = $entries[0]->get_value('displayName');
+    											my ($firstname,$surname) = split(/ /,$fullname);
+    											my $email = $entries[0]->get_value('mail');
+    											$rs = $c->model("MltlDB::User")->create( {
+    												username => $username,
+    												first_name => $firstname,
+    												surname => $surname,
+    												email => $email,
+    												role => 'user'
+    											});
+    											$log->info("$fullname : $email - entered into the DB");
+    											
+    										} else { 
+    											# update the DB (WORK AROUND FOR MYSQL BUG!!!)
+    											my $rs = $c->model("MltlDB::User")->single( {
+    												username => $username
+    											});
+    											$rs->update( {
+    												username => "test$username",
+    											});
+    											my $rs = $c->model("MltlDB::User")->single( {
+    												username => "test$username",
+    											});
+    											$rs->update( {
+    												username => $username,
+    											});
+
+    											my $role = $rs->role;
+    											$c->stash->{role} = $role;
+    										}
+													
+
                         if ($url eq '') {
                         	$c->response->redirect('/');
                         } else {

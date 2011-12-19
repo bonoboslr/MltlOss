@@ -1,0 +1,58 @@
+[% INCLUDE static/moss_header.tt %]
+<body>
+[% INCLUDE static/moss_logout.tt %]
+
+	<div id="prec">
+        <div id="wrap">
+                        <div id="pic">
+				[% INCLUDE moss_admin_box.tt %]
+                        </div>
+                        <div id="menu">
+				[% INCLUDE static/moss_links.tt %]
+                        </div>
+        </div>
+</div>
+	<div class="content">
+
+	<div id="main">
+
+                <div id="left_side">
+
+
+                </div>
+
+  </div>
+  <h2>MOSS Users</h2> 
+  	<form name="updateDetails" action="/admin/users/[% userResults.0.user_id %]/edit" method="POST">
+  		<table>
+		<tr align="left">
+		 <th>Username</th>
+		 <th>First Name</th>
+		 <th>Surname</th>
+		 <th>Phone</th>
+		 <th>Email</th>
+		 <th>Role</th>
+		</tr>
+		[% FOREACH user IN userResults %]
+		[% time = user.last_login.iso8601.split('T') %]
+		<tr align="left">
+		 <td>[% user.username %]</td>
+		 <td><input type="text" value="[% user.first_name %]" name="firstName"></td>
+		 <td><input type="text" value="[% user.surname %]" name="surname"></td>
+		 <td><input type="text" value="[% user.phone %]" name="phone"></td>
+		 <td><input size="40" type="text" value="[% user.email %]" name="email"></td>
+		 <td><select name="userRole"><option value="admin">Administrator</option>
+												<option value="user">User</option>
+												</select></td>
+		</tr>
+		[% END %]
+		</table>
+		<input type="submit" name="updateDetailsSubmit" value="Update User Details">
+				</form>
+		<hr>
+		<form name="changePassword" action="/admin/users/[% userResults.0.user_id %]/edit" method="POST">
+		Change User Password :<input type="password" name="userPassword"><input type="submit" name="changePasswordSubmit" value="Change Password"><font color="red">This does NOT change Kerberos Password - needed for Linux Systems</font>
+		</form>
+		<br>
+		<br>
+	[% INCLUDE static/moss_footer.tt %]

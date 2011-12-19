@@ -70,7 +70,7 @@ __PACKAGE__->table("users");
   is_nullable: 1
   size: 45
 
-=head2 date_added
+=head2 last_login
 
   data_type: TIMESTAMP
   default_value: CURRENT_TIMESTAMP
@@ -130,7 +130,7 @@ __PACKAGE__->add_columns(
     is_nullable => 1,
     size => 45,
   },
-  "date_added",
+  "last_login",
   {
     data_type => "TIMESTAMP",
     default_value => \"CURRENT_TIMESTAMP",
@@ -200,9 +200,51 @@ __PACKAGE__->has_many(
   { "foreign.comment_by" => "self.user_id" },
 );
 
+=head2 tickets_creators
 
-# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-11-28 14:02:47
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:eNY2IG1Pgkqt4ABGSFYu6A
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::Ticket>
+
+=cut
+
+__PACKAGE__->has_many(
+  "tickets_creators",
+  "MltlOss::Schema::MltlDB::Result::Ticket",
+  { "foreign.creator" => "self.user_id" },
+);
+
+=head2 tickets_owners
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::Ticket>
+
+=cut
+
+__PACKAGE__->has_many(
+  "tickets_owners",
+  "MltlOss::Schema::MltlDB::Result::Ticket",
+  { "foreign.owner" => "self.user_id" },
+);
+
+=head2 user_groups
+
+Type: has_many
+
+Related object: L<MltlOss::Schema::MltlDB::Result::UserGroup>
+
+=cut
+
+__PACKAGE__->has_many(
+  "user_groups",
+  "MltlOss::Schema::MltlDB::Result::UserGroup",
+  { "foreign.user_id" => "self.user_id" },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.05003 @ 2011-12-06 15:15:41
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:poerBCqvYzO2IwNjpZxrow
 
 
 # You can replace this text with custom content, and it will be preserved on regeneration
